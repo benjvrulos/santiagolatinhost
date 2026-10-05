@@ -22,11 +22,11 @@ export default function Navbar() {
 
   const navItems = [
     { label: t('nav_inicio'), href: '#inicio' },
-    { label: t('nav_ruta'), href: '#ruta' },
-    { label: t('nav_diferenciadores'), href: '#diferenciadores' },
-    { label: t('nav_como_funciona'), href: '#como-funciona' },
-    { label: t('nav_alianzas'), href: '#alianzas' },
-    { label: t('nav_reserva'), href: '#reserva' },
+    { label: t('nav_tonight'), href: '#tonight' },
+    { label: t('nav_experiences'), href: '#experiences' },
+    { label: t('nav_how'), href: '#como-funciona' },
+    { label: t('nav_partners'), href: '#partners' },
+    { label: t('nav_book'), href: '#reserva' },
   ];
 
   const toggleLang = () => {
@@ -53,9 +53,7 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
+        scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
@@ -76,48 +74,29 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {isHome ? (
-              navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollTo(item.href);
-                  }}
-                  className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${
-                    scrolled ? 'text-primary' : 'text-white'
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))
-            ) : (
-              <>
-                <a href="/" onClick={(e) => { e.preventDefault(); goHome(); }} className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${scrolled ? 'text-primary' : 'text-white'}`}>
-                  {t('nav_inicio')}
-                </a>
-                <a href="/" onClick={(e) => { e.preventDefault(); goHome('#ruta'); }} className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${scrolled ? 'text-primary' : 'text-white'}`}>
-                  {t('nav_ruta')}
-                </a>
-                <a href="/" onClick={(e) => { e.preventDefault(); goHome('#diferenciadores'); }} className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${scrolled ? 'text-primary' : 'text-white'}`}>
-                  {t('nav_diferenciadores')}
-                </a>
-                <a href="/" onClick={(e) => { e.preventDefault(); goHome('#como-funciona'); }} className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${scrolled ? 'text-primary' : 'text-white'}`}>
-                  {t('nav_como_funciona')}
-                </a>
-                <a href="/" onClick={(e) => { e.preventDefault(); goHome('#reserva'); }} className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${scrolled ? 'text-primary' : 'text-white'}`}>
-                  {t('nav_reserva')}
-                </a>
-              </>
-            )}
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={isHome ? item.href : '/'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (isHome) scrollTo(item.href);
+                  else goHome(item.href);
+                }}
+                className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${
+                  scrolled ? 'text-primary' : 'text-white'
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
             <button
               onClick={toggleLang}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-md border transition-all ${
+              className={`text-xs font-semibold px-3 py-1.5 rounded-md border transition-all whitespace-nowrap ${
                 scrolled
                   ? 'border-primary/20 text-primary hover:border-accent hover:text-accent'
                   : 'border-white/30 text-white hover:border-accent hover:text-accent'
@@ -157,33 +136,20 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div className={`lg:hidden overflow-hidden transition-all duration-300 ${mobileOpen ? 'max-h-screen' : 'max-h-0'}`}>
         <div className="bg-white/95 backdrop-blur-md border-t border-gray-100 px-4 py-4 space-y-1">
-          {isHome ? (
-            navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollTo(item.href);
-                }}
-                className="block py-3 px-4 text-sm font-medium text-primary hover:text-accent rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                {item.label}
-              </a>
-            ))
-          ) : (
-            <>
-              <a href="/" onClick={(e) => { e.preventDefault(); goHome(); }} className="block py-3 px-4 text-sm font-medium text-primary hover:text-accent rounded-lg hover:bg-gray-50 transition-colors">
-                {t('nav_inicio')}
-              </a>
-              <a href="/" onClick={(e) => { e.preventDefault(); goHome('#ruta'); }} className="block py-3 px-4 text-sm font-medium text-primary hover:text-accent rounded-lg hover:bg-gray-50 transition-colors">
-                {t('nav_ruta')}
-              </a>
-              <a href="/" onClick={(e) => { e.preventDefault(); goHome('#reserva'); }} className="block py-3 px-4 text-sm font-medium text-primary hover:text-accent rounded-lg hover:bg-gray-50 transition-colors">
-                {t('nav_reserva')}
-              </a>
-            </>
-          )}
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={isHome ? item.href : '/'}
+              onClick={(e) => {
+                e.preventDefault();
+                if (isHome) scrollTo(item.href);
+                else goHome(item.href);
+              }}
+              className="block py-3 px-4 text-sm font-medium text-primary hover:text-accent rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
           <a
             href={isHome ? '#reserva' : '/'}
             onClick={(e) => {

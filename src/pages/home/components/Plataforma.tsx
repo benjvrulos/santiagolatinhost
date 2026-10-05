@@ -1,52 +1,74 @@
-import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useInView from '@/hooks/useInView';
 
 export default function Plataforma() {
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, visible } = useInView(0.1);
 
   return (
-    <section id="plataforma" ref={sectionRef} className="bg-white py-20 md:py-28 lg:py-36">
+    <section id="plataforma" ref={ref} className="bg-primary py-20 md:py-28 lg:py-32 overflow-hidden">
       <div className="section-padding">
-        <div className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
+        {/* Header */}
+        <div className={`max-w-3xl mx-auto text-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <span className="inline-block text-warm-light font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
             {t('platform_label')}
           </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-primary font-bold mb-6 md:mb-8 leading-tight">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white font-bold mb-6 leading-tight">
             {t('platform_title')}
           </h2>
-          <p className="text-gray-600 text-base md:text-lg lg:text-xl leading-relaxed">
+          <p className="text-white/65 text-base md:text-lg lg:text-xl leading-relaxed">
             {t('platform_text')}
           </p>
         </div>
 
-        <div className={`mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-3 md:gap-4 transition-all duration-1000 delay-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {[
-            { icon: 'ri-global-line', labelKey: 'platform_badge_bilingual' },
-            { icon: 'ri-shield-check-line', labelKey: 'platform_badge_safe' },
-            { icon: 'ri-smartphone-line', labelKey: 'platform_badge_digital' },
-            { icon: 'ri-team-line', labelKey: 'platform_badge_groups' },
-          ].map((badge) => (
-            <div key={badge.labelKey} className="flex items-center gap-2 px-4 py-2.5 bg-surface rounded-full">
-              <i className={`${badge.icon} text-accent text-sm`} />
-              <span className="text-primary text-sm font-medium whitespace-nowrap">{t(badge.labelKey)}</span>
+        {/* Flow diagram */}
+        <div className={`mt-14 md:mt-20 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          {/* Local SMEs */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-6 md:py-7 text-center">
+            <div className="w-12 h-12 mx-auto mb-3 flex items-center justify-center rounded-full bg-white/5">
+              <i className="ri-store-2-line text-xl text-warm-light" />
             </div>
-          ))}
+            <h3 className="font-display text-lg md:text-xl text-white font-bold mb-1.5">
+              {t('platform_local_title')}
+            </h3>
+            <p className="text-white/55 text-sm leading-relaxed max-w-lg mx-auto">
+              {t('platform_local_desc')}
+            </p>
+          </div>
+
+          <div className="flex justify-center py-3 md:py-4">
+            <i className="ri-arrow-down-line text-2xl text-accent" />
+          </div>
+
+          {/* Santiago Latin Host */}
+          <div className="rounded-2xl border-2 border-accent bg-accent/[0.08] px-6 py-6 md:py-7 text-center">
+            <div className="w-12 h-12 mx-auto mb-3 flex items-center justify-center rounded-full bg-accent">
+              <i className="ri-links-line text-xl text-white" />
+            </div>
+            <h3 className="font-display text-lg md:text-xl text-white font-bold mb-1.5">
+              {t('platform_center_title')}
+            </h3>
+            <p className="text-white/65 text-sm leading-relaxed max-w-lg mx-auto">
+              {t('platform_center_desc')}
+            </p>
+          </div>
+
+          <div className="flex justify-center py-3 md:py-4">
+            <i className="ri-arrow-down-line text-2xl text-accent" />
+          </div>
+
+          {/* Travelers */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-6 md:py-7 text-center">
+            <div className="w-12 h-12 mx-auto mb-3 flex items-center justify-center rounded-full bg-white/5">
+              <i className="ri-earth-line text-xl text-warm-light" />
+            </div>
+            <h3 className="font-display text-lg md:text-xl text-white font-bold mb-1.5">
+              {t('platform_traveler_title')}
+            </h3>
+            <p className="text-white/55 text-sm leading-relaxed max-w-lg mx-auto">
+              {t('platform_traveler_desc')}
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -8,8 +8,17 @@ export default function Footer() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const quickLinks = [
+    { label: t('nav_inicio'), href: '#inicio' },
+    { label: t('nav_tonight'), href: '#tonight' },
+    { label: t('nav_experiences'), href: '#experiences' },
+    { label: t('nav_how'), href: '#como-funciona' },
+    { label: t('nav_partners'), href: '#partners' },
+    { label: t('nav_book'), href: '#reserva' },
+  ];
+
   return (
-    <footer className="bg-primary-dark py-14 md:py-20">
+    <footer id="contacto" className="bg-primary-dark py-14 md:py-20">
       <div className="section-padding">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8 mb-12 md:mb-16">
@@ -21,7 +30,7 @@ export default function Footer() {
                   alt="Santiago Latin Host"
                   className="w-10 h-10 rounded-full object-cover"
                 />
-                <span className="font-display text-white font-bold text-lg">Santiago Latin Host</span>
+                <span className="font-display text-white font-bold text-lg">{t('footer_brand')}</span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed">
                 {t('footer_tagline')}
@@ -32,13 +41,7 @@ export default function Footer() {
             <div>
               <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">{t('footer_links')}</h4>
               <ul className="space-y-2.5">
-                {[
-                  { label: t('nav_inicio'), href: '#inicio' },
-                  { label: t('nav_experiencias'), href: '#experiencias' },
-                  { label: t('nav_seguridad'), href: '#seguridad' },
-                  { label: t('nav_como_funciona'), href: '#como-funciona' },
-                  { label: t('nav_reserva'), href: '#reserva' },
-                ].map((link) => (
+                {quickLinks.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
@@ -83,7 +86,7 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 <li className="text-white/50 text-sm">{t('footer_email')}</li>
                 <li className="text-white/50 text-sm">{t('footer_phone')}</li>
-                <li className="text-white/50 text-sm pt-2">Santiago, Chile</li>
+                <li className="text-white/50 text-sm pt-2">{t('footer_address')}</li>
               </ul>
             </div>
           </div>
@@ -91,11 +94,12 @@ export default function Footer() {
           {/* Bottom */}
           <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-white/30 text-xs">
-              {new Date().getFullYear()} Santiago Latin Host. {t('footer_copyright')}
+              {new Date().getFullYear()} {t('footer_brand')}. {t('footer_copyright')}
             </p>
             <div className="flex items-center gap-4">
               <span className="text-white/20 text-xs">ES</span>
               <span className="text-white/20 text-xs">EN</span>
+              <span className="text-white/20 text-xs">中文</span>
             </div>
           </div>
         </div>

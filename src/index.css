@@ -20,4 +20,13 @@
   .section-padding {
     @apply px-4 sm:px-6 lg:px-12 xl:px-20;
   }
+  .contact-extra {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
 }
