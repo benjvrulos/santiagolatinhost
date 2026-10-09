@@ -11,7 +11,8 @@ export default {
   // Hero / Cover
   hero_lang_en: "English",
   hero_lang_es: "Español",
-  hero_lang_soon: "中文 coming soon",
+  hero_lang_zh: "中文",
+  hero_lang_soon: "中文",
   hero_h1: "One night in Santiago? Dance it.",
   hero_subtitle:
     "Discover local culture, meet people and experience Santiago through Latin dance.",
@@ -20,8 +21,8 @@ export default {
   hero_cta_explore: "Explore experiences",
 
   // Tonight
-  tonight_label: "Coming",
-  tonight_title: "November in Santiago",
+  tonight_label: "What's happening tonight",
+  tonight_title: "Upcoming experiences",
   tonight_subtitle:
     "Real plans, happening right now. Join a small group with a bilingual host.",
   tonight_live: "Live now",
@@ -32,15 +33,7 @@ export default {
   tonight_main_price: "US$35",
   tonight_book: "Book now",
   tonight_view_detail: "View details",
-  tonight_upcoming_title: "Coming up next",
-  tonight_u1_title: "Salsa Intro Class",
-  tonight_u1_when: "Saturday · 7:00 PM",
-  tonight_u1_desc: "Beginner-friendly salsa class + social practice",
-  tonight_u1_meta: "9 spots left · US$30",
-  tonight_u2_title: "Latin Rooftop Night",
-  tonight_u2_when: "Sunday · 9:00 PM",
-  tonight_u2_desc: "Rooftop social dance with city views",
-  tonight_u2_meta: "Limited spots · US$45",
+  tonight_upcoming_title: "Upcoming experiences",
 
   // Choose your Santiago
   choose_label: "Choose your Santiago",

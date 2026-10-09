@@ -11,7 +11,8 @@ export default {
   // Hero / Portada
   hero_lang_en: "English",
   hero_lang_es: "Español",
-  hero_lang_soon: "中文 próximamente",
+  hero_lang_zh: "中文",
+  hero_lang_soon: "中文",
   hero_h1: "¿Una noche en Santiago? Báilala.",
   hero_subtitle:
     "Descubre la cultura local, conoce gente y vive Santiago a través del baile latino.",
@@ -20,8 +21,8 @@ export default {
   hero_cta_explore: "Explorar experiencias",
 
   // Tonight
-  tonight_label: "Qué pasa hoy",
-  tonight_title: "Esta noche en Santiago",
+  tonight_label: "Próximas experiencias",
+  tonight_title: "Próximas experiencias",
   tonight_subtitle:
     "Planes reales, pasando ahora mismo. Súmate a un grupo pequeño con host bilingüe.",
   tonight_live: "En vivo",
@@ -32,15 +33,7 @@ export default {
   tonight_main_price: "US$35",
   tonight_book: "Reservar ahora",
   tonight_view_detail: "Ver detalle",
-  tonight_upcoming_title: "Próximas actividades",
-  tonight_u1_title: "Clase Intro de Salsa",
-  tonight_u1_when: "Sábado · 19:00",
-  tonight_u1_desc: "Clase de salsa para principiantes + práctica social",
-  tonight_u1_meta: "Quedan 9 cupos · US$30",
-  tonight_u2_title: "Noche Latina en Rooftop",
-  tonight_u2_when: "Domingo · 21:00",
-  tonight_u2_desc: "Baile social en terraza con vista a la ciudad",
-  tonight_u2_meta: "Cupos limitados · US$45",
+  tonight_upcoming_title: "Próximas experiencias",
 
   // Choose your Santiago
   choose_label: "Elige tu Santiago",

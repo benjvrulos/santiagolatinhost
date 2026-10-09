@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
@@ -9,6 +9,8 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isHome) {
@@ -20,6 +22,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
   const navItems = [
     { label: t("nav_inicio"), href: "#inicio" },
     { label: t("nav_tonight"), href: "#tonight" },
@@ -29,8 +41,18 @@ export default function Navbar() {
     { label: t("nav_book"), href: "#reserva" },
   ];
 
-  const toggleLang = () => {
-    i18n.changeLanguage(i18n.language === "es" ? "en" : "es");
+  const langOptions = [
+    { code: "en", short: "EN", label: "English" },
+    { code: "es", short: "ES", label: "Español" },
+    { code: "zh", short: "中文", label: "中文" },
+  ];
+  const currentLang =
+    langOptions.find((l) => i18n.language?.startsWith(l.code)) ||
+    langOptions[0];
+
+  const changeLang = (code: string) => {
+    i18n.changeLanguage(code);
+    setLangOpen(false);
   };
 
   const scrollTo = (href: string) => {
@@ -96,16 +118,43 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggleLang}
-              className={`text-xs font-semibold px-3 py-1.5 rounded-md border transition-all whitespace-nowrap ${
-                scrolled
-                  ? "border-white/25 text-white hover:border-accent hover:text-accent"
-                  : "border-white/30 text-white hover:border-accent hover:text-accent"
-              }`}
-            >
-              {i18n.language === "es" ? "EN" : "ES"}
-            </button>
+            <div ref={langRef} className="relative">
+              <button
+                onClick={() => setLangOpen(!langOpen)}
+                className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-md border transition-all whitespace-nowrap cursor-pointer ${
+                  scrolled
+                    ? "border-white/25 text-white hover:border-accent hover:text-accent"
+                    : "border-white/30 text-white hover:border-accent hover:text-accent"
+                }`}
+              >
+                {currentLang.short}
+                <i
+                  className={`ri-arrow-down-s-line text-sm transition-transform ${langOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+              {langOpen && (
+                <div className="absolute top-full right-0 mt-2 w-44 bg-primary/95 backdrop-blur-md border border-white/15 rounded-lg overflow-hidden z-50">
+                  <ul className="p-1.5">
+                    {langOptions.map((l) => (
+                      <li key={l.code}>
+                        <button
+                          onClick={() => changeLang(l.code)}
+                          className="w-full flex items-center justify-between gap-3 px-3 py-2 text-sm rounded-md text-white/90 hover:bg-white/10 hover:text-accent transition-colors cursor-pointer"
+                        >
+                          <span className="flex items-center gap-2">
+                            <span className="font-semibold">{l.short}</span>
+                            <span className="text-white/70">{l.label}</span>
+                          </span>
+                          {currentLang.code === l.code && (
+                            <i className="ri-check-line text-accent" />
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
             <a
               href={isHome ? "#reserva" : "/"}
               onClick={(e) => {

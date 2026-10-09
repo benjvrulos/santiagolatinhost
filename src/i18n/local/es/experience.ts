@@ -205,40 +205,6 @@ export default {
   exp6_act5:
     "Fotografías, coordinación del regreso y cierre de la experiencia premium.",
 
-  // ---- PAQUETE 7: Social de Bachata ----
-  exp7_title: "Social de Bachata",
-  exp7_subtitle:
-    "Clase introductoria de bachata seguida de baile social en un espacio cálido de Santiago, con host bilingüe de principio a fin.",
-  exp7_full_desc:
-    "El social de bachata es la puerta de entrada a la escena latina de Santiago. Una noche pensada para quienes quieren bailar, conocer gente y vivir la ciudad como un local.\n\nComenzamos con una clase introductoria de bachata, donde tu host bilingüe te enseña los pasos básicos, la conexión con el partner y los códigos del baile social. No necesitas experiencia previa: la clase está diseñada para que te sientas cómodo en la pista desde el primer minuto.\n\nDespués de la clase pasamos al baile social, el corazón de la experiencia. Aquí la comunidad local se mezcla con los viajeros: música en vivo o DJ, parejas rotando y un ambiente cálido donde todos bailan con todos. Tu host te presenta, te acompaña en la pista y se asegura de que te integres.\n\nAl cerrar la noche recibes recomendaciones personalizadas de academias y eventos para seguir bailando durante tu estadía. Es mucho más que una clase: es la manera más auténtica de sentir Santiago.",
-  exp7_purpose:
-    "Vive una noche real de bachata, desde tus primeros pasos hasta bailar con la comunidad local.",
-  exp7_duration: "3 a 4 horas",
-  exp7_group_size: "2 a 10 personas",
-  exp7_language: "Español e Inglés",
-  exp7_includes:
-    "Host bilingüe. Clase introductoria de bachata. Entrada al baile social. Acompañamiento en pista e integración con la comunidad local. Recomendaciones personalizadas de academias y eventos.",
-  exp7_not_includes: "Transporte, bebidas, alimentación ni gastos personales.",
-  exp7_meeting_point:
-    "Estudio de baile céntrico, se confirma al momento de la reserva.",
-  exp7_price_note: "US$35 por persona. Descuento para grupos de 5+.",
-
-  exp7_time1: "00:00",
-  exp7_act1:
-    "Bienvenida en el estudio. Presentación del grupo e introducción a la escena de bachata en Santiago.",
-  exp7_time2: "00:15",
-  exp7_act2:
-    "Clase introductoria de bachata: pasos básicos, ritmo, conexión con el partner y códigos del baile social.",
-  exp7_time3: "01:15",
-  exp7_act3:
-    "Traslado al espacio de baile social. Ingreso y ambientación con la comunidad local.",
-  exp7_time4: "01:45",
-  exp7_act4:
-    "Baile social: práctica de lo aprendido, rotación de parejas y acompañamiento de tu host en pista.",
-  exp7_time5: "03:30",
-  exp7_act5:
-    "Cierre con recomendaciones personalizadas de academias y próximos eventos para seguir bailando.",
-
   // Salsotecas
   venue_tierra_dura_desc:
     "La salsoteca principal de bachata en Santiago. Pista amplia, ambiente cálido y la mejor selección musical para bailar bachata toda la noche.",
