@@ -6,31 +6,69 @@ export function localizeExperience(
   experience: Experience,
   language: string,
 ): Experience {
-  const languageCode = language.split("-")[0];
-
-  const { translations, ...baseExperience } = experience;
+  const languageCode = language.split("-")[0].toLowerCase();
 
   if (languageCode === "es") {
-    return baseExperience;
+    return experience;
   }
 
-  const translation = translations?.find(
-    (item) => item.languageCode === languageCode,
+  const experienceTranslation = experience.translations?.find(
+    (translation) => translation.languageCode.toLowerCase() === languageCode,
   );
 
-  if (!translation) {
-    return baseExperience;
-  }
+  const places = experience.places?.map((experiencePlace) => {
+    const experiencePlaceTranslation = experiencePlace.translations?.find(
+      (translation) => translation.languageCode.toLowerCase() === languageCode,
+    );
+
+    const placeTranslation = experiencePlace.place?.translations?.find(
+      (translation) => translation.languageCode.toLowerCase() === languageCode,
+    );
+
+    return {
+      ...experiencePlace,
+
+      title: experiencePlaceTranslation?.title ?? experiencePlace.title,
+
+      notes: experiencePlaceTranslation?.notes ?? experiencePlace.notes,
+
+      place: {
+        ...experiencePlace.place,
+
+        name: placeTranslation?.name ?? experiencePlace.place.name,
+
+        shortDescription:
+          placeTranslation?.shortDescription ??
+          experiencePlace.place.shortDescription,
+
+        description:
+          placeTranslation?.description ?? experiencePlace.place.description,
+      },
+    };
+  });
 
   return {
-    ...baseExperience,
-    name: translation.name,
-    slug: translation.slug,
-    shortDescription: translation.shortDescription,
-    description: translation.description,
-    included: translation.included,
-    notIncluded: translation.notIncluded,
-    requirements: translation.requirements,
-    recommendations: translation.recommendations,
+    ...experience,
+
+    name: experienceTranslation?.name ?? experience.name,
+
+    slug: experienceTranslation?.slug ?? experience.slug,
+
+    shortDescription:
+      experienceTranslation?.shortDescription ?? experience.shortDescription,
+
+    description: experienceTranslation?.description ?? experience.description,
+
+    included: experienceTranslation?.included ?? experience.included,
+
+    notIncluded: experienceTranslation?.notIncluded ?? experience.notIncluded,
+
+    requirements:
+      experienceTranslation?.requirements ?? experience.requirements,
+
+    recommendations:
+      experienceTranslation?.recommendations ?? experience.recommendations,
+
+    places: places ?? experience.places,
   };
 }

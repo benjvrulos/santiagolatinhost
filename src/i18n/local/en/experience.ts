@@ -19,6 +19,16 @@ export default {
   exp_label_landmarks: "Route Landmarks",
   exp_label_related: "You may also like",
 
+  exp_label_styles: "Dance Styles",
+  exp_up_to_people: "Up to {{count}} people",
+
+  // Sidebar extra labels
+  exp_label_date: "Date",
+  exp_label_schedule: "Schedule",
+  exp_label_requirements: "Requirements",
+  exp_label_recommendations: "Recommendations",
+  exp_label_price_unit: "per person",
+
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:
     "Heritage walk through Santiago's historic center: Plaza de Armas, Metropolitan Cathedral, La Moneda Palace and GAM. Closes with a Salsa or Bachata class.",
@@ -218,6 +228,12 @@ export default {
   exp7_not_includes: "Transport, drinks, food or personal expenses.",
   exp7_meeting_point: "Downtown dance studio, confirmed at time of booking.",
   exp7_price_note: "US$35 per person. Discount for groups of 5+.",
+  exp7_price_amount: "US$35",
+  exp7_date: "Saturday, November 7, 2026",
+  exp7_schedule: "11:30 – 00:00",
+  exp7_requirements: "No previous dance experience required.",
+  exp7_recommendations:
+    "Wear comfortable clothing and suitable shoes for dancing.",
 
   exp7_time1: "00:00",
   exp7_act1:

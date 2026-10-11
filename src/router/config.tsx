@@ -9,7 +9,7 @@ const routes: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/experiencia/:id",
+    path: "/experiencia/:slug",
     element: <ExperienceDetailPage />,
   },
   {

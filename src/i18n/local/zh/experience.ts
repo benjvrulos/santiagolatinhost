@@ -18,6 +18,16 @@ export default {
   exp_label_venues: "推荐萨尔萨舞厅",
   exp_label_landmarks: "路线地标",
   exp_label_related: "你可能也喜欢",
+  exp_label_styles: "舞蹈风格",
+
+  exp_up_to_people: "最多 {{count}} 人",
+
+  // 侧边栏附加标签
+  exp_label_date: "日期",
+  exp_label_schedule: "时间",
+  exp_label_requirements: "要求",
+  exp_label_recommendations: "建议",
+  exp_label_price_unit: "每人",
 
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:
@@ -187,6 +197,11 @@ export default {
   exp7_not_includes: "交通、饮品、餐饮及个人消费。",
   exp7_meeting_point: "市中心舞蹈工作室，预订时确认。",
   exp7_price_note: "US$35 / 人。5 人以上团体享折扣。",
+  exp7_price_amount: "US$35",
+  exp7_date: "2026年11月7日，星期六",
+  exp7_schedule: "11:30 – 00:00",
+  exp7_requirements: "无需任何舞蹈基础。",
+  exp7_recommendations: "建议穿着舒适衣物和适合跳舞的鞋子。",
 
   exp7_time1: "00:00",
   exp7_act1: "在工作室欢迎。团队介绍及圣地亚哥巴恰塔圈子的概览。",
