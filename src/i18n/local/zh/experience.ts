@@ -18,9 +18,6 @@ export default {
   exp_label_venues: "推荐萨尔萨舞厅",
   exp_label_landmarks: "路线地标",
   exp_label_related: "你可能也喜欢",
-  exp_label_styles: "舞蹈风格",
-
-  exp_up_to_people: "最多 {{count}} 人",
 
   // 侧边栏附加标签
   exp_label_date: "日期",
@@ -28,6 +25,39 @@ export default {
   exp_label_requirements: "要求",
   exp_label_recommendations: "建议",
   exp_label_price_unit: "每人",
+
+  // 预订表单
+  exp_booking_label: "预订",
+  exp_booking_title: "预订你的体验",
+  exp_booking_subtitle: "填写你的信息，我们将通过 WhatsApp 或邮件与你确认。",
+  exp_booking_point1_title: "双语向导",
+  exp_booking_point1_desc: "全程西班牙语和英语。",
+  exp_booking_point2_title: "小团体",
+  exp_booking_point2_desc: "贴心而个性化的服务。",
+  exp_booking_name: "姓名",
+  exp_booking_name_ph: "你的姓名",
+  exp_booking_email: "邮箱",
+  exp_booking_email_ph: "you@email.com",
+  exp_booking_whatsapp: "WhatsApp / 电话",
+  exp_booking_whatsapp_ph: "+86 138 0000 0000",
+  exp_booking_date: "期望日期",
+  exp_booking_time: "期望时间",
+  exp_booking_people: "人数",
+  exp_booking_people_ph: "2",
+  exp_booking_level: "舞蹈水平",
+  exp_booking_level_beginner: "初级",
+  exp_booking_level_intermediate: "中级",
+  exp_booking_level_advanced: "高级",
+  exp_booking_experience: "体验项目",
+  exp_booking_notes: "备注",
+  exp_booking_notes_ph: "告诉我们你的疑问、特殊需求或任何细节...",
+  exp_booking_notes_hint: "最多 500 个字符",
+  exp_booking_submit: "提交预订申请",
+  exp_booking_sending: "提交中...",
+  exp_booking_success_title: "申请已提交！",
+  exp_booking_success_desc: "我们已收到你的申请，会尽快联系你确认体验。",
+  exp_booking_another: "再提交一份申请",
+  exp_booking_error: "提交失败，请重试。",
 
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:

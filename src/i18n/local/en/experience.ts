@@ -19,15 +19,48 @@ export default {
   exp_label_landmarks: "Route Landmarks",
   exp_label_related: "You may also like",
 
-  exp_label_styles: "Dance Styles",
-  exp_up_to_people: "Up to {{count}} people",
-
   // Sidebar extra labels
   exp_label_date: "Date",
   exp_label_schedule: "Schedule",
   exp_label_requirements: "Requirements",
   exp_label_recommendations: "Recommendations",
   exp_label_price_unit: "per person",
+
+  // Booking form
+  exp_booking_label: "Booking",
+  exp_booking_title: "Book your experience",
+  exp_booking_subtitle:
+    "Fill in your details and we will confirm by WhatsApp or email.",
+  exp_booking_point1_title: "Bilingual host",
+  exp_booking_point1_desc: "Spanish and English from start to finish.",
+  exp_booking_point2_title: "Small groups",
+  exp_booking_point2_desc: "Close, personalized attention.",
+  exp_booking_name: "Full name",
+  exp_booking_name_ph: "Your name",
+  exp_booking_email: "Email",
+  exp_booking_email_ph: "you@email.com",
+  exp_booking_whatsapp: "WhatsApp / phone",
+  exp_booking_whatsapp_ph: "+1 555 123 4567",
+  exp_booking_date: "Preferred date",
+  exp_booking_time: "Preferred time",
+  exp_booking_people: "Number of people",
+  exp_booking_people_ph: "2",
+  exp_booking_level: "Dance level",
+  exp_booking_level_beginner: "Beginner",
+  exp_booking_level_intermediate: "Intermediate",
+  exp_booking_level_advanced: "Advanced",
+  exp_booking_experience: "Experience",
+  exp_booking_notes: "Comments or notes",
+  exp_booking_notes_ph:
+    "Tell us your questions, special needs or any detail...",
+  exp_booking_notes_hint: "Max 500 characters",
+  exp_booking_submit: "Send booking request",
+  exp_booking_sending: "Sending...",
+  exp_booking_success_title: "Request sent!",
+  exp_booking_success_desc:
+    "We received your request and will contact you very soon to confirm your experience.",
+  exp_booking_another: "Send another request",
+  exp_booking_error: "We could not send your request. Please try again.",
 
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:

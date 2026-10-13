@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "@/components/feature/Navbar";
 import Footer from "@/components/feature/Footer";
 import { useExperienceBySlug } from "@/hooks/useExperiences";
+import BookingForm from "./components/BookingForm";
 
 export default function ExperienceDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -525,6 +526,8 @@ export default function ExperienceDetailPage() {
           </div>
         </div>
       </div>
+      {/* Booking form */}
+      <BookingForm exp={exp} />
 
       <Footer />
     </div>

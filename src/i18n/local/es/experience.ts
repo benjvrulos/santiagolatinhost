@@ -18,8 +18,6 @@ export default {
   exp_label_venues: "Salsotecas de Referencia",
   exp_label_landmarks: "Lugares de la ruta",
   exp_label_related: "También te puede interesar",
-  exp_label_styles: "Estilos de baile",
-  exp_up_to_people: "Hasta {{count}} personas",
 
   // Etiquetas extra de la barra lateral
   exp_label_date: "Fecha",
@@ -27,6 +25,43 @@ export default {
   exp_label_requirements: "Requisitos",
   exp_label_recommendations: "Recomendaciones",
   exp_label_price_unit: "por persona",
+
+  // Formulario de reserva
+  exp_booking_label: "Reserva",
+  exp_booking_title: "Reserva tu experiencia",
+  exp_booking_subtitle:
+    "Completa tus datos y te confirmaremos por WhatsApp o email.",
+  exp_booking_point1_title: "Host bilingüe",
+  exp_booking_point1_desc: "Español e inglés de principio a fin.",
+  exp_booking_point2_title: "Grupos pequeños",
+  exp_booking_point2_desc: "Atención cercana y personalizada.",
+  exp_booking_name: "Nombre completo",
+  exp_booking_name_ph: "Tu nombre",
+  exp_booking_email: "Email",
+  exp_booking_email_ph: "tucorreo@email.com",
+  exp_booking_whatsapp: "WhatsApp / teléfono",
+  exp_booking_whatsapp_ph: "+56 9 1234 5678",
+  exp_booking_date: "Fecha elegida",
+  exp_booking_time: "Horario elegido",
+  exp_booking_people: "Cantidad de personas",
+  exp_booking_people_ph: "2",
+  exp_booking_level: "Nivel de baile",
+  exp_booking_level_beginner: "Principiante",
+  exp_booking_level_intermediate: "Intermedio",
+  exp_booking_level_advanced: "Avanzado",
+  exp_booking_experience: "Experiencia",
+  exp_booking_notes: "Comentarios o notas",
+  exp_booking_notes_ph:
+    "Cuéntanos tus dudas, necesidades especiales o cualquier detalle...",
+  exp_booking_notes_hint: "Máximo 500 caracteres",
+  exp_booking_submit: "Enviar solicitud de reserva",
+  exp_booking_sending: "Enviando...",
+  exp_booking_success_title: "¡Solicitud enviada!",
+  exp_booking_success_desc:
+    "Recibimos tu solicitud y te contactaremos muy pronto para confirmar tu experiencia.",
+  exp_booking_another: "Enviar otra solicitud",
+  exp_booking_error:
+    "No pudimos enviar tu solicitud. Por favor inténtalo de nuevo.",
 
   // ---- PAQUETE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:
