@@ -167,7 +167,7 @@ export default function Tonight() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <button
-                    onClick={() => navigate(`/experiencia/${experience.slug}`)}
+                    onClick={() => navigate(`/experience/${experience.slug}`)}
                     className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap cursor-pointer"
                   >
                     <span>{t("tonight_view_detail")}</span>

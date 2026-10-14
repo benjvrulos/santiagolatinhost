@@ -7,7 +7,7 @@ import ConceptModal, { type ConceptCategory } from "./ConceptModal";
 const categories: ConceptCategory[] = [
   {
     id: "latin-night",
-    img: "https://readdy.ai/api/search-image?query=Vibrant%20Latin%20nightclub%20in%20Santiago%20Chile%20at%20night%2C%20crowd%20dancing%20salsa%20under%20warm%20red%20and%20amber%20lights%2C%20energetic%20motion%2C%20cinematic%20nightlife%20photography&width=900&height=700&seq=slh-choose-latin-night&orientation=landscape",
+    img: "images/club-orixas.jpg",
     badgeKey: "cs1_badge",
     titleKey: "cs1_title",
     descKey: "cs1_desc",
@@ -16,7 +16,7 @@ const categories: ConceptCategory[] = [
   },
   {
     id: "culture-dance",
-    img: "https://readdy.ai/api/search-image?query=Colorful%20heritage%20street%20in%20Santiago%20Chile%20in%20warm%20afternoon%20light%20with%20colonial%20architecture%2C%20a%20couple%20dancing%20in%20the%20distance%2C%20artistic%20editorial%20travel%20photography&width=900&height=700&seq=slh-choose-culture&orientation=landscape",
+    img: "images/barriolastarria.webp",
     badgeKey: "cs2_badge",
     titleKey: "cs2_title",
     descKey: "cs2_desc",
@@ -25,7 +25,7 @@ const categories: ConceptCategory[] = [
   },
   {
     id: "private",
-    img: "https://readdy.ai/api/search-image?query=Elegant%20couple%20enjoying%20an%20exclusive%20private%20latin%20dance%20experience%20in%20an%20upscale%20Santiago%20Chile%20venue%2C%20city%20skyline%20in%20the%20background%2C%20warm%20sophisticated%20lighting%2C%20premium%20travel%20photography&width=900&height=700&seq=slh-choose-private&orientation=landscape",
+    img: "images/gam_baile.jpeg",
     badgeKey: "cs3_badge",
     titleKey: "cs3_title",
     descKey: "cs3_desc",
@@ -163,7 +163,7 @@ export default function ChooseSantiago() {
         </div>
 
         {/* Toggle */}
-        <div className="text-center mt-10 md:mt-12">
+        {/* <div className="text-center mt-10 md:mt-12">
           <button
             onClick={() => setShowAll((prev) => !prev)}
             className="inline-flex items-center gap-2 px-7 py-3.5 border border-primary/15 text-primary font-semibold rounded-full hover:border-accent hover:text-accent transition-colors whitespace-nowrap"
@@ -173,10 +173,10 @@ export default function ChooseSantiago() {
               className={`ri-arrow-down-s-line transition-transform ${showAll ? "rotate-180" : ""}`}
             />
           </button>
-        </div>
+        </div> */}
 
         {/* All packages (expandable) */}
-        <div
+        {/* <div
           className={`overflow-hidden transition-all duration-700 ${showAll ? "max-h-[2000px] opacity-100 mt-12" : "max-h-0 opacity-0"}`}
         >
           <h3 className="font-display text-xl md:text-2xl text-primary font-bold text-center mb-8">
@@ -223,7 +223,7 @@ export default function ChooseSantiago() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <ConceptModal category={preview} onClose={() => setPreview(null)} />

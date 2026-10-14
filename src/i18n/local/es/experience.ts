@@ -63,6 +63,47 @@ export default {
   exp_booking_error:
     "No pudimos enviar tu solicitud. Por favor inténtalo de nuevo.",
 
+  // Checkout / confirmación de compra
+  ck_success_title: "¡Reserva confirmada!",
+  ck_success_subtitle:
+    "Tu compra se realizó con éxito. Te enviamos todos los detalles a tu email.",
+  ck_reference: "Referencia",
+  ck_details_label: "Detalles de la reserva",
+  ck_guest_label: "Datos del huésped",
+  ck_payment_label: "Pago",
+  ck_summary_label: "Resumen del pedido",
+  ck_date: "Fecha",
+  ck_time: "Horario",
+  ck_timezone: "Zona horaria",
+  ck_guests: "Personas",
+  ck_meeting_point: "Punto de encuentro",
+  ck_name: "Nombre completo",
+  ck_email: "Email",
+  ck_phone: "WhatsApp / teléfono",
+  ck_requests: "Solicitudes especiales",
+  ck_no_requests: "Sin solicitudes especiales.",
+  ck_payment_method: "Método de pago",
+  ck_status: "Estado",
+  ck_paid: "Pagado",
+  ck_transaction: "ID de transacción",
+  ck_price_per_person: "Precio por persona",
+  ck_total: "Total",
+  ck_paid_on: "Pagado el",
+  ck_next_steps: "¿Qué sigue?",
+  ck_step1:
+    "Recibirás un email de confirmación con todos los detalles de tu experiencia.",
+  ck_step2:
+    "Te contactaremos por WhatsApp para coordinar el punto de encuentro.",
+  ck_step3: "Llega 10 minutos antes y con ropa cómoda y calzado para bailar.",
+  ck_help_title: "¿Necesitas ayuda?",
+  ck_help_desc: "Escríbenos por WhatsApp si tienes dudas sobre tu reserva.",
+  ck_whatsapp: "Escribir por WhatsApp",
+  ck_add_calendar: "Añadir al calendario",
+  ck_back_home: "Volver al inicio",
+  ck_not_found: "No encontramos esta reserva.",
+  ck_not_found_desc:
+    "Revisa el enlace o vuelve al inicio para explorar las experiencias.",
+
   // ---- PAQUETE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:
     "Recorrido patrimonial por el centro histórico de Santiago: Plaza de Armas, Catedral Metropolitana, Palacio de La Moneda y GAM. Cierra con clase de Salsa o Bachata.",
@@ -268,7 +309,7 @@ export default {
   exp7_price_note: "US$35 por persona. Descuento para grupos de 5+.",
   exp7_price_amount: "US$35",
   exp7_date: "Sábado, 7 de noviembre de 2026",
-  exp7_schedule: "11:30 – 00:00",
+  exp7_schedule: "23:30 – 03:00",
   exp7_requirements: "No se requiere experiencia previa en baile.",
   exp7_recommendations:
     "Asistir con ropa cómoda y calzado adecuado para bailar.",

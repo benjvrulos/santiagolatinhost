@@ -2,6 +2,7 @@ import type { RouteObject } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/home/page";
 import ExperienceDetailPage from "../pages/experience-detail/page";
+import CheckoutPage from "@/pages/checkout/page";
 
 const routes: RouteObject[] = [
   {
@@ -9,8 +10,12 @@ const routes: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/experiencia/:slug",
+    path: "/experience/:slug",
     element: <ExperienceDetailPage />,
+  },
+  {
+    path: "/checkout/:id",
+    element: <CheckoutPage />,
   },
   {
     path: "*",

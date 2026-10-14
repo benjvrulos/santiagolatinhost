@@ -62,6 +62,48 @@ export default {
   exp_booking_another: "Send another request",
   exp_booking_error: "We could not send your request. Please try again.",
 
+  // Checkout / purchase confirmation
+  ck_success_title: "Booking confirmed!",
+  ck_success_subtitle:
+    "Your purchase was successful. We sent all the details to your email.",
+  ck_reference: "Reference",
+  ck_details_label: "Booking details",
+  ck_guest_label: "Guest details",
+  ck_payment_label: "Payment",
+  ck_summary_label: "Order summary",
+  ck_date: "Date",
+  ck_time: "Time",
+  ck_timezone: "Time zone",
+  ck_guests: "Guests",
+  ck_meeting_point: "Meeting point",
+  ck_name: "Full name",
+  ck_email: "Email",
+  ck_phone: "WhatsApp / phone",
+  ck_requests: "Special requests",
+  ck_no_requests: "No special requests.",
+  ck_payment_method: "Payment method",
+  ck_status: "Status",
+  ck_paid: "Paid",
+  ck_transaction: "Transaction ID",
+  ck_price_per_person: "Price per person",
+  ck_total: "Total",
+  ck_paid_on: "Paid on",
+  ck_next_steps: "What happens next?",
+  ck_step1:
+    "You will receive a confirmation email with all the details of your experience.",
+  ck_step2: "We will contact you by WhatsApp to coordinate the meeting point.",
+  ck_step3:
+    "Arrive 10 minutes early with comfortable clothing and shoes for dancing.",
+  ck_help_title: "Need help?",
+  ck_help_desc:
+    "Message us on WhatsApp if you have any questions about your booking.",
+  ck_whatsapp: "Message on WhatsApp",
+  ck_add_calendar: "Add to calendar",
+  ck_back_home: "Back to home",
+  ck_not_found: "We could not find this booking.",
+  ck_not_found_desc:
+    "Check the link or head back home to explore the experiences.",
+
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
   exp1_subtitle:
     "Heritage walk through Santiago's historic center: Plaza de Armas, Metropolitan Cathedral, La Moneda Palace and GAM. Closes with a Salsa or Bachata class.",
@@ -263,7 +305,7 @@ export default {
   exp7_price_note: "US$35 per person. Discount for groups of 5+.",
   exp7_price_amount: "US$35",
   exp7_date: "Saturday, November 7, 2026",
-  exp7_schedule: "11:30 – 00:00",
+  exp7_schedule: "11:30 PM – 3:00 AM",
   exp7_requirements: "No previous dance experience required.",
   exp7_recommendations:
     "Wear comfortable clothing and suitable shoes for dancing.",

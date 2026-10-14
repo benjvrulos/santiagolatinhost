@@ -22,6 +22,7 @@ export default function BookingSummary({
   const hasPrice = typeof pricePerPerson === "number" && pricePerPerson > 0;
   const total = hasPrice ? (pricePerPerson as number) * guests : 0;
   const money = (amount: number) => `${currencySymbol(currency)}${amount}`;
+  console.log(hasPrice, pricePerPerson, guests);
 
   const rows = [
     { label: "Experience", value: experienceName || "—" },
