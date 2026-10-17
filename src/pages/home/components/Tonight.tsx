@@ -53,7 +53,7 @@ export default function Tonight() {
       }).format(new Date(schedule.startDateTime))
     : "";
 
-  const capacity = schedule?.capacity ?? experience?.maxPeople ?? 0;
+  const capacity = schedule?.availableSpots ?? experience?.maxPeople ?? 0;
 
   return (
     <section
@@ -154,10 +154,7 @@ export default function Tonight() {
                   <span className="inline-flex items-center gap-2 text-primary text-sm font-medium">
                     <i className="ri-group-line text-accent" />
 
-                    {t("tonight_main_spots", {
-                      count: capacity,
-                      defaultValue: "Hasta {{count}} personas",
-                    })}
+                    {t("tonight_main_spots", { capacity: capacity })}
                   </span>
 
                   <span className="font-display text-2xl text-primary font-bold">

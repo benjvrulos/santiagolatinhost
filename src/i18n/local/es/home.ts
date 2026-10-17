@@ -29,7 +29,7 @@ export default {
   tonight_main_title: "Social de Bachata",
   tonight_main_when: "Viernes · 20:30",
   tonight_main_desc: "Clase intro + baile social + host bilingüe",
-  tonight_main_spots: "Quedan 5 cupos",
+  tonight_main_spots: "Quedan {{capacity}} cupos",
   tonight_main_price: "US$35",
   tonight_book: "Reservar ahora",
   tonight_view_detail: "Ver detalle",

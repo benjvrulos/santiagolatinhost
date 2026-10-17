@@ -61,6 +61,44 @@ export default {
     "We received your request and will contact you very soon to confirm your experience.",
   exp_booking_another: "Send another request",
   exp_booking_error: "We could not send your request. Please try again.",
+  exp_booking_contact_label: "Contact details",
+  exp_booking_optional: "(optional)",
+  exp_booking_confirm_note: "We'll confirm your booking by email or WhatsApp.",
+  exp_booking_intro:
+    "Ready to experience Santiago? Complete your details and we'll take care of the rest.",
+  exp_booking_schedule_label: "Your schedule",
+  exp_booking_experience_label: "Your experience",
+  exp_booking_available: "Available",
+  exp_booking_full: "Full",
+  exp_booking_spots_one: "{{count}} spot available",
+  exp_booking_spots_other: "{{count}} spots available",
+  exp_booking_no_dates:
+    "No dates available right now. Contact us to arrange your experience.",
+  exp_booking_ask_date: "Can't make this date? Ask for another date",
+  exp_booking_up_to: "Up to {{max}} spots available",
+  exp_booking_decrease: "Decrease number of guests",
+  exp_booking_increase: "Increase number of guests",
+  exp_booking_guests: "Guests",
+  exp_booking_summary: "Booking summary",
+  exp_booking_price_per_person: "Price per person",
+  exp_booking_total: "Total",
+  exp_booking_final_price: "Final price will be confirmed by our team.",
+
+  // Checkout cancelled
+  ck_loading: "Loading booking...",
+  ck_pending_title: "Payment confirmation pending",
+  ck_pending_desc: "We are still confirming your payment.",
+  ck_check_again: "Check again",
+
+  ck_cancelled_title: "Payment cancelled",
+  ck_cancelled_desc: "Your payment was not completed.",
+  ck_cancelled_hold:
+    "Your spots will remain temporarily reserved until the booking expires.",
+
+  // Try again checkout
+
+  ck_retry_payment: "Try payment again",
+  ck_retrying_payment: "Opening payment...",
 
   // Checkout / purchase confirmation
   ck_success_title: "Booking confirmed!",

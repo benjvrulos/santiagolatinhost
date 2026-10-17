@@ -27,7 +27,7 @@ export default {
   tonight_main_title: "巴恰塔社交舞会",
   tonight_main_when: "周五 · 20:30",
   tonight_main_desc: "入门课程 + 社交舞会 + 双语向导",
-  tonight_main_spots: "仅剩 5 个名额",
+  tonight_main_spots: "仅剩 {{capacity}} 个名额",
   tonight_main_price: "US$35",
   tonight_book: "立即预订",
   tonight_view_detail: "查看详情",

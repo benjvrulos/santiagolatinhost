@@ -1,6 +1,7 @@
-import { Upload } from "./upload";
+import { ExperiencePlace } from "./place.interface";
+import { Style } from "./style.interface";
+import { Upload } from "./upload.interface";
 
-// types/experience.ts
 export type ExperienceType =
   | "DAY_TOUR"
   | "CULTURAL"
@@ -33,13 +34,23 @@ export interface Experience {
   isPrivateAvailable: boolean;
   isFeatured: boolean;
   isActive: boolean;
-  places: unknown[];
+  places: ExperiencePlace[];
   academies: unknown[];
-  styles: unknown[];
-  schedules: unknown[];
+  styles: ExperienceStyle[];
+  schedules: ExperienceSchedule[];
   createdAt: string;
   updatedAt: string;
   translations?: ExperienceTranslation[];
+}
+
+export interface ExperienceStyle {
+  id: number;
+
+  experienceId: number;
+
+  styleId: number;
+
+  style: Style;
 }
 export interface ExperienceTranslation {
   id: number;
@@ -52,4 +63,22 @@ export interface ExperienceTranslation {
   notIncluded?: string;
   requirements?: string;
   recommendations?: string;
+}
+
+export interface ExperienceSchedule {
+  id: number;
+  experienceId: number;
+
+  experience?: Experience;
+
+  startDateTime: string;
+  endDateTime: string;
+
+  capacity: number;
+  availableSpots: number;
+
+  status: "AVAILABLE" | "FULL" | "CANCELLED";
+
+  createdAt?: string;
+  updatedAt?: string;
 }

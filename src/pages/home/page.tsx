@@ -1,5 +1,3 @@
-import Navbar from "@/components/feature/Navbar";
-import Footer from "@/components/feature/Footer";
 import Hero from "./components/Hero";
 import Tonight from "./components/Tonight";
 import ChooseSantiago from "./components/ChooseSantiago";
@@ -18,8 +16,7 @@ import Closing from "./components/Closing";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Navbar />
+    <>
       <Hero />
       <Tonight />
       <ChooseSantiago />
@@ -35,7 +32,6 @@ export default function Home() {
       <Execution />
       <Booking />
       <Closing />
-      <Footer />
-    </main>
+    </>
   );
 }

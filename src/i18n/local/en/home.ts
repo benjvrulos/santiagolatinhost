@@ -29,7 +29,7 @@ export default {
   tonight_main_title: "Bachata Social",
   tonight_main_when: "Friday · 8:30 PM",
   tonight_main_desc: "Intro class + social dance + bilingual host",
-  tonight_main_spots: "5 spots left",
+  tonight_main_spots: "{{capacity}} spots left",
   tonight_main_price: "US$35",
   tonight_book: "Book now",
   tonight_view_detail: "View details",

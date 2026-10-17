@@ -1,4 +1,4 @@
-import { Experience } from "@/types/experience";
+import { Experience } from "@/types/experience.interface";
 import { apiNest } from "./apiNest"; // your axios instance
 
 const normalize = (e: Experience): Experience => ({

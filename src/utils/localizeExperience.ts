@@ -1,6 +1,4 @@
-// utils/localizeExperience.ts
-
-import { Experience } from "@/types/experience";
+import { Experience } from "@/types/experience.interface";
 
 export function localizeExperience(
   experience: Experience,

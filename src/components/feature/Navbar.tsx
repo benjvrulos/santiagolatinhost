@@ -50,8 +50,8 @@ export default function Navbar() {
     langOptions.find((l) => i18n.language?.startsWith(l.code)) ||
     langOptions[0];
 
-  const changeLang = (code: string) => {
-    i18n.changeLanguage(code);
+  const changeLang = async (code: string) => {
+    await i18n.changeLanguage(code);
     setLangOpen(false);
   };
 

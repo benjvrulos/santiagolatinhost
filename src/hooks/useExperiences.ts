@@ -1,8 +1,8 @@
 // hooks/useExperiences.ts
 
 import { apiNest } from "@/services/apiNest";
-import { getExperience, getExperiences } from "@/services/experience";
-import { Experience } from "@/types/experience";
+import { getExperience, getExperiences } from "@/services/experience.api";
+import { Experience } from "@/types/experience.interface";
 
 import { localizeExperience } from "@/utils/localizeExperience";
 

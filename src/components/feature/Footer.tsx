@@ -1,20 +1,20 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
   const { t } = useTranslation();
 
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   const quickLinks = [
-    { label: t('nav_inicio'), href: '#inicio' },
-    { label: t('nav_tonight'), href: '#tonight' },
-    { label: t('nav_experiences'), href: '#experiences' },
-    { label: t('nav_how'), href: '#como-funciona' },
-    { label: t('nav_partners'), href: '#partners' },
-    { label: t('nav_book'), href: '#reserva' },
+    { label: t("nav_inicio"), href: "#inicio" },
+    { label: t("nav_tonight"), href: "#tonight" },
+    { label: t("nav_experiences"), href: "#experiences" },
+    { label: t("nav_how"), href: "#como-funciona" },
+    { label: t("nav_partners"), href: "#partners" },
+    { label: t("nav_book"), href: "#reserva" },
   ];
 
   return (
@@ -24,28 +24,31 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8 mb-12 md:mb-16">
             {/* Brand */}
             <div className="lg:col-span-1">
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="https://static.readdy.ai/image/2d21e4e330632c8a528b9c2920a5df7e/689ee08902c28f0d96d4ae04dd23bfa2.jpeg"
-                  alt="Santiago Latin Host"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <span className="font-display text-white font-bold text-lg">{t('footer_brand')}</span>
-              </div>
+              <img
+                src="https://public.readdy.ai/ai/img_res/40542972-0570-4301-8277-5cd7bbb67ee9.png"
+                alt="Santiago Latin Host logo"
+                title="Santiago Latin Host logo"
+                className="h-20 md:h-24 w-auto object-contain mb-5"
+              />
               <p className="text-white/50 text-sm leading-relaxed">
-                {t('footer_tagline')}
+                {t("footer_tagline")}
               </p>
             </div>
 
             {/* Links */}
             <div>
-              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">{t('footer_links')}</h4>
+              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
+                {t("footer_links")}
+              </h4>
               <ul className="space-y-2.5">
                 {quickLinks.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollTo(link.href);
+                      }}
                       className="text-white/50 text-sm hover:text-accent transition-colors"
                     >
                       {link.label}
@@ -57,22 +60,39 @@ export default function Footer() {
 
             {/* Social */}
             <div>
-              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">{t('footer_social')}</h4>
+              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
+                {t("footer_social")}
+              </h4>
               <ul className="space-y-2.5">
                 <li>
-                  <a href="https://www.instagram.com/santiagolatinhost/" target="_blank" rel="noopener noreferrer" className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2">
+                  <a
+                    href="https://www.instagram.com/santiagolatinhost/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2"
+                  >
                     <i className="ri-instagram-line" />
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2">
+                  <a
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2"
+                  >
                     <i className="ri-youtube-line" />
                     YouTube
                   </a>
                 </li>
                 <li>
-                  <a href="https://wa.me/56923895542" target="_blank" rel="noopener noreferrer" className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2">
+                  <a
+                    href="https://wa.me/56923895542"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2"
+                  >
                     <i className="ri-whatsapp-line" />
                     WhatsApp
                   </a>
@@ -82,11 +102,34 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">{t('footer_contact')}</h4>
+              <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
+                {t("footer_contact")}
+              </h4>
               <ul className="space-y-2.5">
-                <li className="text-white/50 text-sm">{t('footer_email')}</li>
-                <li className="text-white/50 text-sm">{t('footer_phone')}</li>
-                <li className="text-white/50 text-sm pt-2">{t('footer_address')}</li>
+                <li>
+                  <a
+                    href="mailto:chilelatinhost@gmail.com"
+                    className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2"
+                  >
+                    <i className="ri-mail-line text-base" />
+                    chilelatinhost@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/56923895542"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/50 text-sm hover:text-accent transition-colors inline-flex items-center gap-2"
+                  >
+                    <i className="ri-whatsapp-line text-base" />
+                    +569 2389 5542
+                  </a>
+                </li>
+                <li className="text-white/50 text-sm inline-flex items-center gap-2 pt-2">
+                  <i className="ri-map-pin-line text-base" />
+                  {t("footer_address")}
+                </li>
               </ul>
             </div>
           </div>
@@ -94,7 +137,8 @@ export default function Footer() {
           {/* Bottom */}
           <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-white/30 text-xs">
-              {new Date().getFullYear()} {t('footer_brand')}. {t('footer_copyright')}
+              {new Date().getFullYear()} {t("footer_brand")}.{" "}
+              {t("footer_copyright")}
             </p>
             <div className="flex items-center gap-4">
               <span className="text-white/20 text-xs">ES</span>

@@ -1,198 +1,87 @@
-import { useEffect, useMemo, useState } from "react";
-
 import type { ChangeEvent, FormEvent } from "react";
-
 import { useTranslation } from "react-i18next";
-
-import { experiencePricing } from "@/mocks/experiences";
-
 import ExperienceCard from "@/pages/experience-detail/components/booking/ExperienceCard";
-
 import ScheduleCard from "@/pages/experience-detail/components/booking/ScheduleCard";
-
 import GuestCounter from "@/pages/experience-detail/components/booking/GuestCounter";
-
 import BookingSummary from "@/pages/experience-detail/components/booking/BookingSummary";
 
-import {
-  formatScheduleDate,
-  formatScheduleTime,
-} from "@/pages/experience-detail/components/booking/formatSchedule";
+import { formatScheduleDate, formatScheduleTime } from "@/utils/formatSchedule";
 
-import { useCreateBooking } from "@/hooks/useCreateBooking";
-
-import { useCreateStripeCheckout } from "@/hooks/useCreateStripeCheckout";
-
-const WHATSAPP_HREF = "https://wa.me/56923895542";
-
-const GENERIC_ERROR = "We could not start your booking. Please try again.";
+import type { Experience } from "@/types/experience.interface";
+import type { BookingDetail } from "@/types/booking.interface";
+import { useBookingForm } from "@/hooks/useBookingForm";
+import { WHATSAPP_HREF } from "@/constants/booking.constants";
 
 interface BookingFormProps {
-  exp?: any;
+  exp: Experience;
+  booking?: BookingDetail;
+  mode?: "create" | "edit";
+  onCancelEdit?: () => void;
 }
-
-const BENEFITS = [
-  {
-    icon: "ri-translate-2",
-    title: "Bilingual host",
-    desc: "Spanish and English assistance.",
-  },
-  {
-    icon: "ri-group-line",
-    title: "Small groups",
-    desc: "Personalized cultural experiences.",
-  },
-];
-
 const inputClass =
   "w-full px-4 py-3 bg-surface/70 border border-gray-200 rounded-lg text-primary text-sm placeholder-gray-400 focus:outline-none focus:border-accent transition-colors";
 
 const labelClass =
   "block text-gray-500 text-xs font-medium uppercase tracking-wider mb-2";
 
-export default function BookingForm({ exp }: BookingFormProps) {
-  const { t } = useTranslation();
+export default function BookingForm({
+  exp,
+  booking,
+  mode = "create",
+  onCancelEdit,
+}: BookingFormProps) {
+  const { t, i18n } = useTranslation();
 
-  const [errorMsg, setErrorMsg] = useState("");
+  const {
+    schedule,
+    guests,
+    setGuests,
+    email,
+    setEmail,
+    maxGuests,
+    isLoading,
+    errorMsg,
+    handleSubmit,
+  } = useBookingForm({
+    exp,
+    booking,
+    mode,
+  });
+  const pricePerPerson = exp.price;
 
-  const [guests, setGuests] = useState(1);
-
-  const [email, setEmail] = useState("");
-
-  const createBookingMutation = useCreateBooking();
-
-  const createStripeCheckoutMutation = useCreateStripeCheckout();
-
-  const schedule = useMemo(() => {
-    const schedules = exp?.schedules;
-
-    if (!schedules?.length) {
-      console.log("No schedules found");
-
-      return null;
-    }
-
-    const availableSchedule = schedules.find(
-      (item: any) => item.status === "AVAILABLE",
-    );
-
-    return availableSchedule ?? null;
-  }, [exp]);
-
-  const maxGuests = Math.max(1, schedule?.capacity ?? 0);
-
-  const pricePerPerson = exp?.price;
-
-  const currency = exp?.currency ?? "USD";
-
-  const isLoading =
-    createBookingMutation.isPending || createStripeCheckoutMutation.isPending;
-
-  useEffect(() => {
-    setGuests(1);
-    setEmail("");
-    setErrorMsg("");
-  }, [exp?.id]);
-
-  useEffect(() => {
-    setGuests((current) => Math.min(Math.max(1, current), maxGuests));
-  }, [maxGuests]);
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    const honeypot = String(formData.get("website_alt") || "").trim();
-
-    if (honeypot) {
-      return;
-    }
-
-    if (!schedule) {
-      setErrorMsg("No schedule is currently available.");
-
-      return;
-    }
-
-    setErrorMsg("");
-
-    try {
-      // 1. Crear reserva
-      const booking = await createBookingMutation.mutateAsync({
-        scheduleId: schedule.id,
-
-        contactName: String(formData.get("contactName") || "").trim(),
-
-        contactEmail: email.trim(),
-
-        contactPhone:
-          String(formData.get("contactPhone") || "").trim() || undefined,
-
-        peopleCount: guests,
-
-        specialRequests:
-          String(formData.get("specialRequests") || "").trim() || undefined,
-      });
-
-      // 2. Crear Checkout de Stripe
-      const checkout = await createStripeCheckoutMutation.mutateAsync(
-        booking.id,
-      );
-
-      if (!checkout.checkoutUrl) {
-        throw new Error("Stripe checkout URL was not returned");
-      }
-
-      // 3. Ir a Stripe
-      window.location.href = checkout.checkoutUrl;
-    } catch (error) {
-      console.error("Booking error:", error);
-
-      setErrorMsg("We could not start your booking. Please try again.");
-    }
-  };
+  const currency = exp.currency ?? "USD";
 
   return (
     <section id="reserva" className="bg-surface py-16 md:py-24 lg:py-28">
       <div className="section-padding">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
-            {/* Intro */}
+            {/* INTRO */}
             <div className="lg:col-span-2">
               <p className="text-accent text-sm font-medium tracking-[0.15em] uppercase mb-4">
-                Booking
+                {mode === "edit"
+                  ? t("exp_booking_edit_label", {
+                      defaultValue: "Modify booking",
+                    })
+                  : t("exp_booking_label")}
               </p>
 
               <h2 className="font-display text-3xl md:text-4xl text-primary font-bold mb-4 leading-tight">
-                Book your experience
+                {mode === "edit"
+                  ? t("exp_booking_edit_title", {
+                      defaultValue: "Update your booking",
+                    })
+                  : t("exp_booking_title")}
               </h2>
 
-              <p className="text-gray-600 text-base leading-relaxed mb-8">
-                Ready to experience Santiago? Complete your details and continue
-                securely to payment.
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                {BENEFITS.map((item) => (
-                  <li key={item.title} className="flex items-start gap-3">
-                    <div className="w-9 h-9 flex items-center justify-center flex-shrink-0 rounded-md bg-accent/10">
-                      <i className={`${item.icon} text-accent text-sm`} />
-                    </div>
-
-                    <div>
-                      <p className="text-primary text-sm font-semibold">
-                        {item.title}
-                      </p>
-
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              {mode === "edit" && booking && (
+                <p className="text-gray-500 text-sm mb-6">
+                  {t("pending_booking_reference", {
+                    defaultValue: "Booking",
+                  })}{" "}
+                  #{booking.id}
+                </p>
+              )}
 
               <a
                 href={WHATSAPP_HREF}
@@ -201,11 +90,14 @@ export default function BookingForm({ exp }: BookingFormProps) {
                 className="inline-flex items-center gap-2 text-sm font-medium text-primary border border-gray-200 rounded-full px-5 py-3 hover:border-accent hover:text-accent transition-colors whitespace-nowrap"
               >
                 <i className="ri-whatsapp-line text-base" />
-                Ask by WhatsApp
+
+                {t("exp_booking_whatsapp_help", {
+                  defaultValue: "Ask by WhatsApp",
+                })}
               </a>
             </div>
 
-            {/* Form */}
+            {/* FORM */}
             <div className="lg:col-span-3">
               <form
                 onSubmit={handleSubmit}
@@ -222,35 +114,42 @@ export default function BookingForm({ exp }: BookingFormProps) {
                   whatsappHref={WHATSAPP_HREF}
                 />
 
-                {/* Contact details */}
+                {/* CONTACT DETAILS */}
                 <p className="text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-4">
-                  Contact details
+                  {t("exp_booking_contact_label")}
                 </p>
 
                 <div className="space-y-5">
+                  {/* NAME */}
                   <div>
-                    <label className={labelClass}>Full name</label>
+                    <label className={labelClass}>
+                      {t("exp_booking_name")}
+                    </label>
 
                     <input
                       type="text"
                       name="contactName"
                       required
                       maxLength={150}
-                      placeholder="Your name"
+                      placeholder={t("exp_booking_name_ph")}
+                      defaultValue={booking?.contactName ?? ""}
                       className={inputClass}
                     />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* EMAIL */}
                     <div>
-                      <label className={labelClass}>Email address</label>
+                      <label className={labelClass}>
+                        {t("exp_booking_email")}
+                      </label>
 
                       <input
                         type="email"
                         name="contactEmail"
                         required
                         maxLength={150}
-                        placeholder="you@email.com"
+                        placeholder={t("exp_booking_email_ph")}
                         value={email}
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                           setEmail(event.target.value)
@@ -259,11 +158,12 @@ export default function BookingForm({ exp }: BookingFormProps) {
                       />
                     </div>
 
+                    {/* PHONE */}
                     <div>
                       <label className={labelClass}>
-                        WhatsApp / Phone{" "}
+                        {t("exp_booking_whatsapp")}{" "}
                         <span className="normal-case tracking-normal text-gray-400">
-                          (optional)
+                          {t("exp_booking_optional")}
                         </span>
                       </label>
 
@@ -271,12 +171,14 @@ export default function BookingForm({ exp }: BookingFormProps) {
                         type="tel"
                         name="contactPhone"
                         maxLength={50}
-                        placeholder="+1 555 123 4567"
+                        placeholder={t("exp_booking_whatsapp_ph")}
+                        defaultValue={booking?.contactPhone ?? ""}
                         className={inputClass}
                       />
                     </div>
                   </div>
 
+                  {/* PEOPLE */}
                   <GuestCounter
                     value={guests}
                     min={1}
@@ -285,22 +187,26 @@ export default function BookingForm({ exp }: BookingFormProps) {
                   />
                 </div>
 
-                {/* Special requests */}
+                {/* SPECIAL REQUESTS */}
                 <div className="mt-6">
                   <label className={labelClass}>
-                    Special requests (optional)
+                    {t("exp_booking_notes")}{" "}
+                    <span className="normal-case tracking-normal text-gray-400">
+                      {t("exp_booking_optional")}
+                    </span>
                   </label>
 
                   <textarea
                     name="specialRequests"
                     rows={3}
                     maxLength={2000}
-                    placeholder="Any questions, accessibility needs or special requirements?"
+                    placeholder={t("exp_booking_notes_ph")}
+                    defaultValue={booking?.specialRequests ?? ""}
                     className={`${inputClass} resize-none`}
                   />
                 </div>
 
-                {/* Honeypot */}
+                {/* HONEYPOT */}
                 <input
                   type="text"
                   name="website_alt"
@@ -311,33 +217,65 @@ export default function BookingForm({ exp }: BookingFormProps) {
                   className="contact-extra"
                 />
 
-                {/* Booking summary */}
+                {/* SUMMARY */}
                 <div className="mt-6">
                   <BookingSummary
                     experienceName={exp?.name ?? ""}
-                    dateLabel={schedule ? formatScheduleDate(schedule) : "—"}
-                    timeLabel={schedule ? formatScheduleTime(schedule) : "—"}
+                    dateLabel={
+                      schedule
+                        ? formatScheduleDate(schedule, i18n.language)
+                        : "—"
+                    }
+                    timeLabel={
+                      schedule
+                        ? formatScheduleTime(schedule, i18n.language)
+                        : "—"
+                    }
                     guests={guests}
                     pricePerPerson={Number(pricePerPerson)}
                     currency={currency}
                   />
                 </div>
 
-                {/* Submit */}
+                {/* CANCEL EDIT */}
+                {mode === "edit" && onCancelEdit && (
+                  <button
+                    type="button"
+                    onClick={onCancelEdit}
+                    disabled={isLoading}
+                    className="mt-6 w-full flex items-center justify-center gap-2 px-8 py-3 border border-gray-200 text-primary font-medium rounded-full hover:border-accent hover:text-accent transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <i className="ri-arrow-left-line" />
+
+                    {t("exp_booking_cancel_edit", {
+                      defaultValue: "Cancel changes",
+                    })}
+                  </button>
+                )}
+
+                {/* SUBMIT */}
                 <button
                   type="submit"
                   disabled={isLoading || !schedule}
-                  className="mt-6 w-full flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer"
+                  className={`w-full flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed whitespace-nowrap cursor-pointer ${
+                    mode === "edit" ? "mt-3" : "mt-6"
+                  }`}
                 >
                   {isLoading ? (
                     <>
                       <i className="ri-loader-4-line animate-spin" />
 
-                      <span>Preparing payment...</span>
+                      <span>{t("exp_booking_sending")}</span>
                     </>
                   ) : (
                     <>
-                      <span>Continue to payment</span>
+                      <span>
+                        {mode === "edit"
+                          ? t("exp_booking_update", {
+                              defaultValue: "Update booking and continue",
+                            })
+                          : t("exp_booking_submit")}
+                      </span>
 
                       <i className="ri-arrow-right-line" />
                     </>
@@ -345,8 +283,7 @@ export default function BookingForm({ exp }: BookingFormProps) {
                 </button>
 
                 <p className="text-center text-gray-400 text-xs mt-3">
-                  You'll be redirected to Stripe to complete your secure
-                  payment.
+                  {t("exp_booking_confirm_note")}
                 </p>
 
                 {errorMsg && (

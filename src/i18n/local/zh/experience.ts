@@ -58,6 +58,40 @@ export default {
   exp_booking_success_desc: "我们已收到你的申请，会尽快联系你确认体验。",
   exp_booking_another: "再提交一份申请",
   exp_booking_error: "提交失败，请重试。",
+  exp_booking_contact_label: "联系方式",
+  exp_booking_optional: "（可选）",
+  exp_booking_confirm_note: "我们将通过邮件或 WhatsApp 确认你的预订。",
+  exp_booking_intro: "准备好体验圣地亚哥了吗？填写你的信息，其余的交给我们。",
+  exp_booking_schedule_label: "你的时间安排",
+  exp_booking_experience_label: "你的体验",
+  exp_booking_available: "可预订",
+  exp_booking_full: "已满",
+  exp_booking_spots_one: "剩余 {{count}} 个名额",
+  exp_booking_spots_other: "剩余 {{count}} 个名额",
+  exp_booking_no_dates: "目前没有可预订的日期。请联系我们安排你的体验。",
+  exp_booking_ask_date: "这个日期不合适？咨询其他日期",
+  exp_booking_up_to: "最多 {{max}} 个名额",
+  exp_booking_decrease: "减少人数",
+  exp_booking_increase: "增加人数",
+  exp_booking_guests: "人数",
+  exp_booking_summary: "预订摘要",
+  exp_booking_price_per_person: "每人价格",
+  exp_booking_total: "合计",
+  exp_booking_final_price: "最终价格将由我们的团队确认。",
+
+  // Checkout cancelled
+  ck_loading: "正在加载预订...",
+  ck_pending_title: "付款确认中",
+  ck_pending_desc: "我们仍在确认您的付款。",
+  ck_check_again: "再次检查",
+
+  ck_cancelled_title: "付款已取消",
+  ck_cancelled_desc: "您的付款尚未完成。",
+  ck_cancelled_hold: "在预订过期之前，您的名额将暂时保留。",
+
+  // Try again
+  ck_retry_payment: "重新付款",
+  ck_retrying_payment: "正在打开付款页面...",
 
   // 结账 / 购买确认
   ck_success_title: "预订已确认！",

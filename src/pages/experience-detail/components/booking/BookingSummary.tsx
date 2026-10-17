@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface BookingSummaryProps {
   experienceName: string;
   dateLabel: string;
@@ -19,22 +21,20 @@ export default function BookingSummary({
   pricePerPerson,
   currency,
 }: BookingSummaryProps) {
+  const { t } = useTranslation();
   const hasPrice = typeof pricePerPerson === "number" && pricePerPerson > 0;
   const total = hasPrice ? (pricePerPerson as number) * guests : 0;
   const money = (amount: number) => `${currencySymbol(currency)}${amount}`;
-  console.log(hasPrice, pricePerPerson, guests);
-
   const rows = [
-    { label: "Experience", value: experienceName || "—" },
-    { label: "Date", value: dateLabel || "—" },
-    { label: "Time", value: timeLabel || "—" },
-    { label: "Guests", value: String(guests) },
+    { label: t("exp_booking_experience"), value: experienceName || "—" },
+    { label: t("exp_label_date"), value: dateLabel || "—" },
+    { label: t("exp_label_schedule"), value: timeLabel || "—" },
+    { label: t("exp_booking_guests"), value: String(guests) },
   ];
-
   return (
     <div className="rounded-xl border border-gray-200 bg-surface/70 p-4 md:p-5">
       <p className="text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-3">
-        Booking summary
+        {t("exp_booking_summary")}
       </p>
 
       <dl className="space-y-2">
@@ -50,7 +50,7 @@ export default function BookingSummary({
         {hasPrice && (
           <div className="flex items-start justify-between gap-4 text-sm">
             <dt className="text-gray-500 whitespace-nowrap">
-              Price per person
+              {t("exp_booking_price_per_person")}
             </dt>
             <dd className="text-primary font-medium text-right">
               {money(pricePerPerson as number)}
