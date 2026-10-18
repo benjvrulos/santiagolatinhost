@@ -18,6 +18,7 @@ export default {
   exp_label_venues: "Featured Salsa Venues",
   exp_label_landmarks: "Route Landmarks",
   exp_label_related: "You may also like",
+  exp_label_styles: "Dance Styles",
 
   // Sidebar extra labels
   exp_label_date: "Date",

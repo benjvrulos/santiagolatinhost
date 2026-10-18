@@ -18,6 +18,7 @@ export default {
   exp_label_venues: "推荐萨尔萨舞厅",
   exp_label_landmarks: "路线地标",
   exp_label_related: "你可能也喜欢",
+  exp_label_styles: "舞蹈风格",
 
   // 侧边栏附加标签
   exp_label_date: "日期",
