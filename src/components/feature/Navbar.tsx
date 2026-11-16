@@ -90,8 +90,8 @@ export default function Navbar() {
             className="flex items-center flex-shrink-0"
           >
             <img
-              src="https://public.readdy.ai/ai/img_res/40542972-0570-4301-8277-5cd7bbb67ee9.png"
-              alt="Santiago Latin Host"
+              src="images/chile_latin_host_logo.png"
+              alt="Chile Latin Host"
               className="h-12 md:h-16 w-auto object-contain"
             />
           </a>

@@ -116,20 +116,11 @@ export function useBookingForm({ exp, booking, mode }: Params) {
         return;
       }
 
-      const storageKey = `pendingBooking:${schedule.id}`;
-
-      const existingId = localStorage.getItem(storageKey);
-
-      if (existingId) {
-        await goToStripe(Number(existingId));
-
-        return;
-      }
-
       const created = await createBookingMutation.mutateAsync({
         scheduleId: schedule.id,
         ...payload,
       });
+      const storageKey = `pendingBooking:${schedule.id}`;
 
       localStorage.setItem(storageKey, String(created.id));
 

@@ -25,9 +25,8 @@ export default function Footer() {
             {/* Brand */}
             <div className="lg:col-span-1">
               <img
-                src="https://public.readdy.ai/ai/img_res/40542972-0570-4301-8277-5cd7bbb67ee9.png"
-                alt="Santiago Latin Host logo"
-                title="Santiago Latin Host logo"
+                src="images/chile_latin_host_logo.png"
+                title="Chile Latin Host logo"
                 className="h-20 md:h-24 w-auto object-contain mb-5"
               />
               <p className="text-white/50 text-sm leading-relaxed">

@@ -4,8 +4,10 @@ import GuestDetailsCard from "@/pages/checkout/components/GuestDetailsCard";
 import PaymentCard from "@/pages/checkout/components/PaymentCard";
 import OrderSummary from "@/pages/checkout/components/OrderSummary";
 import NextSteps from "@/pages/checkout/components/NextSteps";
+
 import { useTranslation } from "react-i18next";
 import { useCheckoutPage } from "@/hooks/useCheckoutPage";
+
 import { WHATSAPP_HREF } from "@/constants/booking.constants";
 
 export default function CheckoutPage() {
@@ -19,12 +21,20 @@ export default function CheckoutPage() {
     isLoading,
     hasError,
     isPaid,
+    isExpired,
+    isPaymentCancelled,
     isRetryingPayment,
     checkoutData,
     handleRetryPayment,
     handleModifyBooking,
     navigate,
   } = useCheckoutPage();
+
+  /*
+   * =========================
+   * INVALID BOOKING ID
+   * =========================
+   */
 
   if (!isValidBookingId) {
     return (
@@ -51,6 +61,12 @@ export default function CheckoutPage() {
     );
   }
 
+  /*
+   * =========================
+   * LOADING
+   * =========================
+   */
+
   if (isLoading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
@@ -62,6 +78,12 @@ export default function CheckoutPage() {
       </div>
     );
   }
+
+  /*
+   * =========================
+   * ERROR / NOT FOUND
+   * =========================
+   */
 
   if (hasError || !booking || (!cancelled && !payment)) {
     return (
@@ -92,6 +114,76 @@ export default function CheckoutPage() {
     );
   }
 
+  /*
+   * =========================
+   * EXPIRED BOOKING
+   * =========================
+   */
+
+  if (isExpired) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
+        <div className="text-center max-w-md">
+          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
+            <i className="ri-time-line text-2xl text-amber-500" />
+          </div>
+
+          <h1 className="font-display text-2xl text-primary font-bold mb-3">
+            {t("ck_expired_title", {
+              defaultValue: "Your booking has expired",
+            })}
+          </h1>
+
+          <p className="text-gray-600 text-sm leading-relaxed mb-2">
+            {t("ck_expired_desc", {
+              defaultValue:
+                "The time available to complete your payment has expired.",
+            })}
+          </p>
+
+          {isPaymentCancelled && (
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              {t("ck_expired_payment", {
+                defaultValue:
+                  "The payment was cancelled and no charge was made.",
+              })}
+            </p>
+          )}
+
+          {!isPaymentCancelled && (
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              {t("ck_expired_payment_pending", {
+                defaultValue: "The booking is no longer active.",
+              })}
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.removeItem(`pendingBooking:${booking.schedule.id}`);
+
+              navigate(`/experience/${booking.schedule.experience.slug}`);
+            }}
+            className="inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer"
+          >
+            <i className="ri-refresh-line" />
+
+            {t("ck_book_again", {
+              defaultValue: "Book again",
+            })}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /*
+   * =========================
+   * USER CANCELLED STRIPE
+   * =========================
+   */
+
   if (cancelled) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
@@ -121,11 +213,13 @@ export default function CheckoutPage() {
               {isRetryingPayment ? (
                 <>
                   <i className="ri-loader-4-line animate-spin" />
+
                   {t("ck_retrying_payment")}
                 </>
               ) : (
                 <>
                   <i className="ri-bank-card-line" />
+
                   {t("ck_retry_payment")}
                 </>
               )}
@@ -133,9 +227,7 @@ export default function CheckoutPage() {
 
             <button
               type="button"
-              onClick={() => {
-                handleModifyBooking;
-              }}
+              onClick={handleModifyBooking}
               className="w-full px-6 py-3 rounded-full border border-gray-200 text-primary font-medium hover:border-accent hover:text-accent transition-colors"
             >
               {t("checkout_modify_booking", {
@@ -148,17 +240,17 @@ export default function CheckoutPage() {
     );
   }
 
-  if (!isPaid) {
-    // tu pending actual
-  }
-
+  /*
+   * Necesitamos todos los datos
+   * para renderizar pending o success.
+   */
   if (!booking || !payment || !checkoutData) {
     return null;
   }
 
   const {
     schedule,
-    exp,
+    experience,
     guests,
     pricePerPerson,
     currency,
@@ -170,9 +262,17 @@ export default function CheckoutPage() {
     gcalUrl,
   } = checkoutData;
 
-  console.log(exp);
+  /*
+   * =========================
+   * PAYMENT STILL PENDING
+   * =========================
+   */
 
-  if (!isPaid) {
+  const isPaymentPending =
+    booking.status === "PENDING" &&
+    booking.paymentStatus === "PENDING" &&
+    payment.status === "PENDING";
+  if (isPaymentPending) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
         <div className="text-center max-w-md">
@@ -201,6 +301,12 @@ export default function CheckoutPage() {
     );
   }
 
+  /*
+   * =========================
+   * SUCCESS
+   * =========================
+   */
+
   return (
     <div className="pt-16 md:pt-20">
       <section className="section-padding py-12 md:py-16">
@@ -216,9 +322,9 @@ export default function CheckoutPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2 space-y-6 md:space-y-8">
             <BookingDetailsCard
-              img={exp?.coverImage?.path ?? ""}
+              img={experience?.coverImage?.path ?? ""}
               title={experienceName}
-              subtitle={exp?.shortDescription ?? exp?.description}
+              subtitle={experience?.shortDescription ?? experience?.description}
               dateLabel={dateLabel}
               timeLabel={timeLabel}
               guests={guests}
@@ -233,11 +339,11 @@ export default function CheckoutPage() {
             />
 
             <PaymentCard
-              brand={payment?.brand ?? "Stripe"}
-              last4={payment?.last4 ?? ""}
-              transactionId={payment?.transactionId ?? ""}
+              brand={payment.brand ?? "Stripe"}
+              last4={payment.last4 ?? ""}
+              transactionId={payment.transactionId ?? ""}
               amountLabel={money(payment.amount)}
-              paidAt={payment?.paidAt ?? ""}
+              paidAt={payment.paidAt ?? ""}
             />
           </div>
 

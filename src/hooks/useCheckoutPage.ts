@@ -66,7 +66,17 @@ export function useCheckoutPage() {
     useCreateStripeCheckout();
 
   useEffect(() => {
-    if (booking?.status === "CONFIRMED" && booking.paymentStatus === "PAID") {
+    if (!booking) {
+      return;
+    }
+
+    const isCompleted =
+      booking.status === "CONFIRMED" && booking.paymentStatus === "PAID";
+
+    const isExpired =
+      booking.status === "EXPIRED" && booking.paymentStatus === "CANCELLED";
+
+    if (isCompleted || isExpired) {
       localStorage.removeItem(`pendingBooking:${booking.schedule.id}`);
     }
   }, [booking]);
@@ -122,6 +132,10 @@ export function useCheckoutPage() {
     booking?.status === "CONFIRMED" &&
     booking.paymentStatus === "PAID" &&
     payment?.status === "PAID";
+  const isExpired = booking?.status === "EXPIRED";
+
+  const isPaymentCancelled =
+    booking?.paymentStatus === "CANCELLED" || payment?.status === "CANCELLED";
 
   const lang = i18n.resolvedLanguage ?? i18n.language ?? "en";
 
@@ -171,7 +185,8 @@ export function useCheckoutPage() {
     isLoading,
     hasError,
     isPaid,
-
+    isExpired,
+    isPaymentCancelled,
     isRetryingPayment,
 
     checkoutData,

@@ -79,3 +79,10 @@ export interface UpdatePendingBookingPayload {
   peopleCount?: number;
   specialRequests?: string;
 }
+
+export type BookingPaymentStatus =
+  | "PENDING"
+  | "PAID"
+  | "CANCELLED"
+  | "PARTIALLY_REFUNDED"
+  | "REFUNDED";
