@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next';
 import useInView from '@/hooks/useInView';
 
 const steps = [
-  { num: '01', icon: 'ri-compass-3-line', titleKey: 'how_step1_title', descKey: 'how_step1_desc' },
-  { num: '02', icon: 'ri-calendar-check-line', titleKey: 'how_step2_title', descKey: 'how_step2_desc' },
-  { num: '03', icon: 'ri-secure-payment-line', titleKey: 'how_step3_title', descKey: 'how_step3_desc' },
-  { num: '04', icon: 'ri-moon-clear-line', titleKey: 'how_step4_title', descKey: 'how_step4_desc' },
+  { num: '01', icon: 'ri-chat-smile-2-line', titleKey: 'how_step1_title', descKey: 'how_step1_desc' },
+  { num: '02', icon: 'ri-sparkling-2-line', titleKey: 'how_step2_title', descKey: 'how_step2_desc' },
+  { num: '03', icon: 'ri-route-line', titleKey: 'how_step3_title', descKey: 'how_step3_desc' },
+  { num: '04', icon: 'ri-calendar-check-line', titleKey: 'how_step4_title', descKey: 'how_step4_desc' },
 ];
 
 export default function ComoFunciona() {
@@ -13,7 +13,7 @@ export default function ComoFunciona() {
   const { ref, visible } = useInView(0.1);
 
   return (
-    <section id="como-funciona" ref={ref} className="bg-white py-20 md:py-28 lg:py-32">
+    <section id="como-funciona" ref={ref} className="bg-surface py-20 md:py-28 lg:py-32">
       <div className="section-padding">
         <div className={`text-center max-w-2xl mx-auto mb-14 md:mb-20 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
@@ -37,7 +37,7 @@ export default function ComoFunciona() {
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-accent/20 to-transparent" />
               )}
-              <div className="h-full bg-surface border border-gray-100 rounded-xl p-6 md:p-7 relative overflow-hidden">
+              <div className="h-full bg-white border border-gray-100 rounded-xl p-6 md:p-7 relative overflow-hidden">
                 <span className="absolute top-2 right-3 font-display text-4xl font-bold text-accent/5 leading-none select-none" aria-hidden="true">
                   {step.num}
                 </span>

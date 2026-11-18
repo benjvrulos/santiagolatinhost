@@ -102,11 +102,19 @@ export default function Partners() {
                 </div>
               ))}
             </div>
+
+            <button
+              onClick={() => document.querySelector('#partner-form')?.scrollIntoView({ behavior: 'smooth' })}
+              className="mt-8 inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap cursor-pointer"
+            >
+              {t('partners_cta')}
+              <i className="ri-arrow-down-line" />
+            </button>
           </div>
 
           {/* Form */}
           <div className={`transition-all duration-1000 delay-150 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <div className="bg-surface rounded-2xl p-6 md:p-8 border border-gray-100">
+            <div id="partner-form" className="bg-surface rounded-2xl p-6 md:p-8 border border-gray-100">
               {submitted ? (
                 <div className="text-center py-10">
                   <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-accent/10 flex items-center justify-center">
@@ -151,9 +159,13 @@ export default function Partners() {
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors appearance-none"
                       >
                         <option value="" disabled>{t('partner_form_type')}</option>
-                        <option value="Dance school">{t('partner_form_type_school')}</option>
+                        <option value="Hotel">{t('partner_form_type_hotel')}</option>
+                        <option value="Tour operator">{t('partner_form_type_operator')}</option>
+                        <option value="Restaurant">{t('partner_form_type_restaurant')}</option>
+                        <option value="Dance academy">{t('partner_form_type_school')}</option>
+                        <option value="Local guide">{t('partner_form_type_guide')}</option>
+                        <option value="Tourism SME">{t('partner_form_type_sme')}</option>
                         <option value="Cultural space">{t('partner_form_type_space')}</option>
-                        <option value="Event producer">{t('partner_form_type_events')}</option>
                         <option value="Other">{t('partner_form_type_other')}</option>
                       </select>
                     </div>

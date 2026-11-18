@@ -32,12 +32,12 @@ export default function Closing() {
           </p>
 
           <a
-            href="#tonight"
-            onClick={(e) => { e.preventDefault(); scrollTo('#tonight'); }}
+            href="#experiences"
+            onClick={(e) => { e.preventDefault(); scrollTo('#experiences'); }}
             className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-all hover:scale-105 whitespace-nowrap"
           >
             <span className="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center">
-              <i className="ri-live-line text-sm" />
+              <i className="ri-compass-3-line text-sm" />
             </span>
             <span>{t('closing_cta')}</span>
           </a>

@@ -34,6 +34,7 @@ export default function Navbar() {
 
   const navItems = [
     { label: t("nav_inicio"), href: "#inicio" },
+    { label: t("nav_ai"), href: "#ai-planner" },
     { label: t("nav_tonight"), href: "#tonight" },
     { label: t("nav_experiences"), href: "#experiences" },
     { label: t("nav_how"), href: "#como-funciona" },
@@ -50,8 +51,8 @@ export default function Navbar() {
     langOptions.find((l) => i18n.language?.startsWith(l.code)) ||
     langOptions[0];
 
-  const changeLang = async (code: string) => {
-    await i18n.changeLanguage(code);
+  const changeLang = (code: string) => {
+    i18n.changeLanguage(code);
     setLangOpen(false);
   };
 
@@ -90,14 +91,14 @@ export default function Navbar() {
             className="flex items-center flex-shrink-0"
           >
             <img
-              src="images/chile_latin_host_logo.png"
-              alt="Chile Latin Host"
+              src="https://public.readdy.ai/ai/img_res/40542972-0570-4301-8277-5cd7bbb67ee9.png"
+              alt="Santiago Latin Host"
               className="h-12 md:h-16 w-auto object-contain"
             />
           </a>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-5">
             {navItems.map((item) => (
               <a
                 key={item.href}
@@ -107,7 +108,7 @@ export default function Navbar() {
                   if (isHome) scrollTo(item.href);
                   else goHome(item.href);
                 }}
-                className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${
+                className={`text-[12px] xl:text-sm font-medium whitespace-nowrap transition-colors hover:text-accent ${
                   scrolled ? "text-white/85" : "text-white"
                 }`}
               >
