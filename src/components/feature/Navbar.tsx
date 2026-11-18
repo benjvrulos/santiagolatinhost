@@ -46,6 +46,7 @@ export default function Navbar() {
     { code: "en", short: "EN", label: "English" },
     { code: "es", short: "ES", label: "Español" },
     { code: "zh", short: "中文", label: "中文" },
+    { code: "pt", short: "PT", label: "Português" },
   ];
   const currentLang =
     langOptions.find((l) => i18n.language?.startsWith(l.code)) ||
