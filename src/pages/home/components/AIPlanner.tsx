@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import useInView from '@/hooks/useInView';
+import { experienceLocation, experienceName } from '@/i18n/experienceText';
 import {
   marketCategories,
   marketExperiences,
@@ -11,9 +11,25 @@ import {
 
 type BudgetTier = 'low' | 'mid' | 'high';
 
+const plannerLanguages = ['en', 'es', 'zh', 'pt'] as const;
+type PlannerLanguage = (typeof plannerLanguages)[number];
+
+function resolvePlannerLanguage(lng?: string): PlannerLanguage {
+  const base = (lng || 'en').toLowerCase().split('-')[0];
+  return (plannerLanguages as readonly string[]).includes(base)
+    ? (base as PlannerLanguage)
+    : 'en';
+}
+
 interface DayPlan {
   day: number;
   items: MarketExperience[];
+}
+
+interface ChatMessage {
+  id: number;
+  role: 'ai' | 'user';
+  text: string;
 }
 
 function tierOf(price: number): BudgetTier {
@@ -23,8 +39,7 @@ function tierOf(price: number): BudgetTier {
 }
 
 export default function AIPlanner() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { ref, visible } = useInView(0.06);
 
   const [destination, setDestination] = useState('Santiago');
@@ -32,9 +47,36 @@ export default function AIPlanner() {
   const [endDate, setEndDate] = useState('');
   const [travelers, setTravelers] = useState(2);
   const [budget, setBudget] = useState<BudgetTier>('mid');
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState<PlannerLanguage>(() =>
+    resolvePlannerLanguage(i18n.resolvedLanguage || i18n.language)
+  );
   const [interests, setInterests] = useState<MarketCategoryId[]>(['dance', 'food']);
   const [plan, setPlan] = useState<DayPlan[] | null>(null);
+  const [planLang, setPlanLang] = useState<PlannerLanguage>(() =>
+    resolvePlannerLanguage(i18n.resolvedLanguage || i18n.language)
+  );
+  const [chat, setChat] = useState<ChatMessage[]>([]);
+  const [typing, setTyping] = useState(false);
+  const timers = useRef<number[]>([]);
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  const clearTimers = () => {
+    timers.current.forEach((id) => window.clearTimeout(id));
+    timers.current = [];
+  };
+
+  useEffect(() => () => {
+    timers.current.forEach((id) => window.clearTimeout(id));
+  }, []);
+
+  useEffect(() => {
+    const el = chatRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [chat, typing]);
+
+  useEffect(() => {
+    setLanguage(resolvePlannerLanguage(i18n.resolvedLanguage || i18n.language));
+  }, [i18n.resolvedLanguage, i18n.language]);
 
   const toggleInterest = (id: MarketCategoryId) => {
     setInterests((prev) =>
@@ -42,7 +84,16 @@ export default function AIPlanner() {
     );
   };
 
+  const pushTimer = (fn: () => void, delay: number) => {
+    const id = window.setTimeout(fn, delay);
+    timers.current.push(id);
+  };
+
   const generate = () => {
+    clearTimers();
+    const tt = i18n.getFixedT(language);
+    setPlanLang(language);
+
     let pool = marketExperiences.filter(
       (exp) => interests.length === 0 || interests.includes(exp.category)
     );
@@ -55,8 +106,43 @@ export default function AIPlanner() {
       const computed = Math.round(diff / (1000 * 60 * 60 * 24)) + 1;
       if (computed >= 1) days = Math.min(Math.max(computed, 1), 4);
     }
+
+    const interestLabels = marketCategories
+      .filter((cat) => interests.includes(cat.id))
+      .map((cat) => tt(cat.labelKey))
+      .join(' · ');
+
+    const userMessage: ChatMessage = {
+      id: Date.now(),
+      role: 'user',
+      text: tt('ai_chat_user', {
+        days,
+        destination: destination || tt('ai_destination'),
+        people: travelers,
+        budget: tt(`ai_budget_${budget}`),
+      }),
+    };
+
+    setPlan(null);
+    setChat([userMessage]);
+    setTyping(true);
+
+    pushTimer(() => {
+      setChat((prev) => [
+        ...prev,
+        { id: Date.now() + 1, role: 'ai', text: tt('ai_chat_1') },
+      ]);
+    }, 700);
+
     if (pool.length === 0) {
-      setPlan([]);
+      pushTimer(() => {
+        setChat((prev) => [
+          ...prev,
+          { id: Date.now() + 2, role: 'ai', text: tt('ai_chat_nomatch') },
+        ]);
+        setTyping(false);
+        setPlan([]);
+      }, 1900);
       return;
     }
 
@@ -67,11 +153,42 @@ export default function AIPlanner() {
       const items = second && second.id !== first.id ? [first, second] : [first];
       next.push({ day: d + 1, items });
     }
-    setPlan(next);
+    const totalUnique = new Set(
+      next.flatMap((day) => day.items.map((item) => item.id))
+    ).size;
+
+    pushTimer(() => {
+      setChat((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 3,
+          role: 'ai',
+          text: tt('ai_chat_2', {
+            total: totalUnique,
+            interests: interestLabels || tt('ai_chat_any_interest'),
+          }),
+        },
+      ]);
+    }, 1700);
+
+    pushTimer(() => {
+      setChat((prev) => [
+        ...prev,
+        { id: Date.now() + 4, role: 'ai', text: tt('ai_chat_3', { days }) },
+      ]);
+    }, 2700);
+
+    pushTimer(() => {
+      setTyping(false);
+      setPlan(next);
+    }, 3500);
   };
 
   const reset = () => {
+    clearTimers();
     setPlan(null);
+    setChat([]);
+    setTyping(false);
     setStartDate('');
     setEndDate('');
     setTravelers(2);
@@ -79,15 +196,13 @@ export default function AIPlanner() {
     setInterests(['dance', 'food']);
   };
 
+  const planT = i18n.getFixedT(planLang);
+
   const totalPerPerson = plan
     ? plan.reduce((sum, day) => sum + day.items.reduce((s, item) => s + item.price, 0), 0)
     : 0;
 
-  const openItem = (item: MarketExperience) => {
-    if (item.experienceId) {
-      navigate(`/experiencia/${item.experienceId}`);
-      return;
-    }
+  const handleBook = () => {
     const el = document.querySelector('#reserva');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
@@ -179,15 +294,21 @@ export default function AIPlanner() {
                   </label>
                   <select
                     value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
+                    onChange={(e) => setLanguage(resolvePlannerLanguage(e.target.value))}
                     className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors cursor-pointer"
                   >
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                    <option value="zh">中文</option>
+                    <option value="en">{t('ai_lang_en')}</option>
+                    <option value="es">{t('ai_lang_es')}</option>
+                    <option value="zh">{t('ai_lang_zh')}</option>
+                    <option value="pt">{t('ai_lang_pt')}</option>
                   </select>
                 </div>
               </div>
+
+              <p className="flex items-start gap-1.5 text-gray-400 text-[11px] leading-relaxed -mt-1">
+                <i className="ri-translate-2 mt-0.5 text-accent" />
+                {t('ai_language_note')}
+              </p>
 
               <div>
                 <label className="block text-primary text-sm font-medium mb-2">
@@ -251,11 +372,101 @@ export default function AIPlanner() {
             </div>
           </div>
 
-          {/* Result */}
+          {/* Chat + itinerary */}
           <div className="lg:col-span-3">
-            <div className="h-full bg-white rounded-2xl border border-gray-100 p-6 md:p-7">
-              {!plan ? (
-                <div className="h-full min-h-[420px] flex flex-col items-center justify-center text-center px-4">
+            <div className="h-full bg-white rounded-2xl border border-gray-100 p-5 md:p-6 flex flex-col">
+              <div className="flex items-center justify-between gap-3 pb-4 border-b border-gray-100">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="relative w-10 h-10 flex items-center justify-center rounded-full bg-accent/10 flex-shrink-0">
+                    <i className="ri-sparkling-2-line text-lg text-accent" />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-primary text-sm font-semibold leading-tight truncate">{t('ai_chat_name')}</p>
+                    <p className="text-gray-400 text-xs">{t('ai_chat_status')}</p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1 bg-warm/10 text-warm text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap">
+                  <i className="ri-flask-line" />
+                  {t('ai_prototype_badge')}
+                </span>
+              </div>
+
+              {chat.length > 0 && (
+                <div ref={chatRef} className="mt-4 space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                  {chat.map((msg) => (
+                    <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div
+                        className={`max-w-[88%] px-3.5 py-2.5 text-sm leading-relaxed ${
+                          msg.role === 'user'
+                            ? 'bg-primary text-white rounded-2xl rounded-br-md'
+                            : 'bg-surface text-primary rounded-2xl rounded-bl-md'
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                    </div>
+                  ))}
+                  {typing && (
+                    <div className="flex justify-start">
+                      <div className="bg-surface rounded-2xl rounded-bl-md px-4 py-3 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: '200ms' }} />
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: '400ms' }} />
+                      </div>
+                    </div>
+                  )}
+
+                  {plan && plan.length > 0 && !typing && (
+                    <div className="flex justify-start">
+                      <div className="max-w-[92%] bg-surface rounded-2xl rounded-bl-md px-4 py-3 text-sm leading-relaxed text-primary">
+                        {plan.map((day) => (
+                          <p key={day.day} className="mb-2.5 last:mb-0">
+                            <span className="font-semibold text-accent">
+                              {planT('ai_day', { count: day.day })}:
+                            </span>{' '}
+                            {day.items.map((item, index) => (
+                              <span key={`${day.day}-${item.id}`}>
+                                {index > 0 ? ' · ' : ''}
+                                <span className="font-medium">{experienceName(item, planT)}</span>
+                                <span className="text-gray-500">
+                                  {' '}
+                                  ({experienceLocation(item, planT)}) US${item.price}
+                                </span>
+                              </span>
+                            ))}
+                          </p>
+                        ))}
+                        <p className="mt-2.5 pt-2.5 border-t border-primary/10 font-semibold">
+                          {planT('ai_estimate')}: US${totalPerPerson * travelers}
+                          <span className="text-gray-500 font-normal ml-1">
+                            ({planT('ai_for_people', { count: travelers })})
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {plan && plan.length > 0 && !typing && (
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <button
+                    type="button"
+                    onClick={handleBook}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-white text-sm font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap cursor-pointer"
+                  >
+                    <i className="ri-calendar-check-line" />
+                    {t('ai_reserve')}
+                  </button>
+                  <p className="mt-3 text-gray-400 text-[11px] leading-relaxed">
+                    {t('ai_prototype_note')}
+                  </p>
+                </div>
+              )}
+
+              {!plan && chat.length === 0 ? (
+                <div className="flex-1 min-h-[340px] flex flex-col items-center justify-center text-center px-4">
                   <div className="w-16 h-16 flex items-center justify-center rounded-full bg-accent/10 mb-5">
                     <i className="ri-route-line text-3xl text-accent" />
                   </div>
@@ -270,89 +481,7 @@ export default function AIPlanner() {
                     {t('ai_prototype_note')}
                   </p>
                 </div>
-              ) : plan.length === 0 ? (
-                <div className="h-full min-h-[420px] flex flex-col items-center justify-center text-center px-4">
-                  <i className="ri-emotion-sad-line text-3xl text-accent" />
-                  <p className="text-gray-500 text-sm mt-3">{t('ai_no_match')}</p>
-                </div>
-              ) : (
-                <>
-                  <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                    <div>
-                      <p className="text-warm text-xs font-semibold uppercase tracking-wider mb-1">
-                        {t('ai_plan_label')}
-                      </p>
-                      <h3 className="font-display text-xl md:text-2xl text-primary font-bold">
-                        {destination || t('ai_destination')}
-                      </h3>
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 bg-surface text-primary text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap">
-                      <i className="ri-group-line text-accent" />
-                      {travelers}
-                    </span>
-                  </div>
-
-                  <div className="space-y-4 max-h-[430px] overflow-y-auto pr-1">
-                    {plan.map((day) => (
-                      <div key={day.day} className="rounded-xl border border-gray-100 overflow-hidden">
-                        <div className="flex items-center gap-2 px-4 py-2.5 bg-surface">
-                          <span className="w-6 h-6 flex items-center justify-center rounded-full bg-accent text-white text-xs font-bold">
-                            {day.day}
-                          </span>
-                          <span className="text-primary text-sm font-semibold">
-                            {t('ai_day', { count: day.day })}
-                          </span>
-                        </div>
-                        <ul className="divide-y divide-gray-100">
-                          {day.items.map((item) => (
-                            <li key={`${day.day}-${item.id}`} className="flex items-center gap-3 px-4 py-3">
-                              <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                                <img
-                                  src={item.img}
-                                  alt={item.name}
-                                  className="w-full h-full object-cover object-top"
-                                />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-primary text-sm font-semibold truncate">{item.name}</p>
-                                <p className="text-gray-400 text-xs truncate">
-                                  {item.location} · {item.durationHours ? `${item.durationHours}h` : t('mkt_nights', { count: item.nights })}
-                                </p>
-                              </div>
-                              <div className="flex items-center gap-2 flex-shrink-0">
-                                <span className="text-accent text-sm font-bold">US${item.price}</span>
-                                <button
-                                  onClick={() => openItem(item)}
-                                  className="w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-accent hover:text-white text-primary transition-colors cursor-pointer"
-                                  aria-label={item.experienceId ? t('mkt_view') : t('mkt_interest')}
-                                >
-                                  <i className="ri-arrow-right-line text-sm" />
-                                </button>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-gray-400 text-xs uppercase tracking-wider">{t('ai_estimate')}</p>
-                      <p className="text-primary text-lg font-bold">
-                        US${totalPerPerson * travelers}
-                        <span className="text-gray-400 text-xs font-normal ml-1">
-                          ({t('ai_for_people', { count: travelers })})
-                        </span>
-                      </p>
-                    </div>
-                    <span className="inline-flex items-center gap-1.5 bg-warm/10 text-warm text-[11px] font-semibold px-3 py-1.5 rounded-full whitespace-nowrap">
-                      <i className="ri-flask-line" />
-                      {t('ai_prototype_badge')}
-                    </span>
-                  </div>
-                </>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

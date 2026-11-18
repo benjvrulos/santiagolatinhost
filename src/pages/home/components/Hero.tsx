@@ -22,6 +22,7 @@ export default function Hero() {
     { code: 'en', label: t('hero_lang_en') },
     { code: 'es', label: t('hero_lang_es') },
     { code: 'zh', label: t('hero_lang_zh') },
+    { code: 'pt', label: t('hero_lang_pt') },
   ];
 
   return (

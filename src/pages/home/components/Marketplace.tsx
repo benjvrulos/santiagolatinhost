@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useInView from '@/hooks/useInView';
+import { experienceLocation, experienceName } from '@/i18n/experienceText';
 import {
   marketCategories,
   marketExperiences,
@@ -191,6 +192,8 @@ export default function Marketplace() {
               const categoryLabel = t(
                 marketCategories.find((c) => c.id === exp.category)?.labelKey ?? 'mkt_category_all'
               );
+              const expName = experienceName(exp, t);
+              const expLocation = experienceLocation(exp, t);
               return (
                 <article
                   key={exp.id}
@@ -202,7 +205,7 @@ export default function Marketplace() {
                   <div className="relative h-52 overflow-hidden">
                     <img
                       src={exp.img}
-                      alt={exp.name}
+                      alt={expName}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
@@ -219,13 +222,13 @@ export default function Marketplace() {
 
                   <div className="p-5">
                     <h3 className="font-display text-lg text-primary font-bold mb-2 leading-tight">
-                      {exp.name}
+                      {expName}
                     </h3>
 
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-gray-500 text-xs mb-3">
                       <span className="inline-flex items-center gap-1.5">
                         <i className="ri-map-pin-line text-accent" />
-                        {exp.location}
+                        {expLocation}
                       </span>
                       <span className="inline-flex items-center gap-1.5">
                         <i className="ri-time-line text-accent" />

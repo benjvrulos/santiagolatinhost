@@ -9,6 +9,7 @@ export default function Markets() {
     { key: 'markets_lang_en', active: true },
     { key: 'markets_lang_es', active: true },
     { key: 'markets_lang_zh', active: true },
+    { key: 'markets_lang_pt', active: true },
   ];
 
   return (
