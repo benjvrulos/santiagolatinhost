@@ -10,6 +10,7 @@ export default function Footer() {
 
   const quickLinks = [
     { label: t("nav_inicio"), href: "#inicio" },
+    { label: t("nav_ai"), href: "#ai-planner" },
     { label: t("nav_tonight"), href: "#tonight" },
     { label: t("nav_experiences"), href: "#experiences" },
     { label: t("nav_how"), href: "#como-funciona" },
