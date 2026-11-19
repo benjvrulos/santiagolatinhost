@@ -5,14 +5,13 @@ import useInView from '@/hooks/useInView';
 import { experienceLocation, experienceName } from '@/i18n/experienceText';
 import {
   marketCategories,
+  marketDestinationKeys,
   marketExperiences,
   type MarketCategoryId,
   type MarketExperience,
 } from '@/mocks/marketplace';
 
 type BudgetTier = 'all' | 'low' | 'mid' | 'high';
-
-const destinations = ['Santiago', 'Cajón del Maipo', 'Casablanca', 'Tarapacá'];
 
 function priceTier(price: number): Exclude<BudgetTier, 'all'> {
   if (price < 40) return 'low';
@@ -23,7 +22,7 @@ function priceTier(price: number): Exclude<BudgetTier, 'all'> {
 export default function Marketplace() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { ref, visible } = useInView(0.06);
+  const { ref } = useInView(0.02);
 
   const [category, setCategory] = useState<'all' | MarketCategoryId>('all');
   const [destination, setDestination] = useState('all');
@@ -34,7 +33,7 @@ export default function Marketplace() {
     const month = date ? new Date(`${date}T00:00:00`).getMonth() + 1 : null;
     return marketExperiences.filter((exp) => {
       if (category !== 'all' && exp.category !== category) return false;
-      if (destination !== 'all' && exp.location !== destination) return false;
+      if (destination !== 'all' && exp.locationKey !== destination) return false;
       if (month !== null && !exp.months.includes(month)) return false;
       if (budget !== 'all' && priceTier(exp.price) !== budget) return false;
       return true;
@@ -61,7 +60,7 @@ export default function Marketplace() {
     <section id="experiences" ref={ref} className="bg-white py-16 md:py-24 lg:py-28">
       <div className="section-padding">
         {/* Header */}
-        <div className={`text-center max-w-2xl mx-auto mb-10 md:mb-12 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
           <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
             {t('mkt_label')}
           </span>
@@ -115,8 +114,8 @@ export default function Marketplace() {
                 className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors cursor-pointer"
               >
                 <option value="all">{t('mkt_destination_all')}</option>
-                {destinations.map((d) => (
-                  <option key={d} value={d}>{d}</option>
+                {marketDestinationKeys.map((key) => (
+                  <option key={key} value={key}>{t(key)}</option>
                 ))}
               </select>
             </div>
@@ -162,7 +161,7 @@ export default function Marketplace() {
         </div>
 
         {/* Result count */}
-        <div className="max-w-6xl mx-auto mb-5 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto mb-5 flex flex-wrap items-center justify-between gap-2">
           <p className="text-gray-500 text-sm">
             {t('mkt_results', { count: filtered.length })}
           </p>
@@ -187,8 +186,8 @@ export default function Marketplace() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 max-w-6xl mx-auto">
-            {filtered.map((exp, index) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 max-w-6xl mx-auto" data-product-shop>
+            {filtered.map((exp) => {
               const categoryLabel = t(
                 marketCategories.find((c) => c.id === exp.category)?.labelKey ?? 'mkt_category_all'
               );
@@ -197,12 +196,9 @@ export default function Marketplace() {
               return (
                 <article
                   key={exp.id}
-                  className={`group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-accent/30 transition-all duration-500 hover:-translate-y-1 ${
-                    visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{ transitionDelay: `${(index % 6) * 70}ms` }}
+                  className="group bg-white rounded-xl overflow-hidden border border-gray-100 hover:border-accent/30 transition-colors duration-300"
                 >
-                  <div className="relative h-52 overflow-hidden">
+                  <div className="relative h-52 overflow-hidden bg-surface-dark">
                     <img
                       src={exp.img}
                       alt={expName}
@@ -263,6 +259,7 @@ export default function Marketplace() {
             })}
           </div>
         )}
+
       </div>
     </section>
   );

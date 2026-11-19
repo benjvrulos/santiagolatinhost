@@ -33,7 +33,7 @@ export default function Reels() {
           {reels.map((reel, index) => (
             <a
               key={reel.labelKey}
-              href="https://www.instagram.com/santiagolatinhost/"
+              href="https://www.instagram.com/chilelatinhost/"
               target="_blank"
               rel="noopener noreferrer"
               className={`group relative rounded-xl overflow-hidden aspect-[9/16] transition-all duration-700 hover:-translate-y-1 ${
@@ -61,7 +61,7 @@ export default function Reels() {
 
         <div className="text-center mt-10 md:mt-12">
           <a
-            href="https://www.instagram.com/santiagolatinhost/"
+            href="https://www.instagram.com/chilelatinhost/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/25 text-white font-semibold rounded-full hover:bg-white/10 transition-colors whitespace-nowrap"

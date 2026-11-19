@@ -12,8 +12,9 @@ export default function Closing() {
     <section id="cierre" className="relative overflow-hidden py-24 md:py-36">
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=Cinematic%20night%20view%20of%20Santiago%20Chile%20with%20glowing%20city%20lights%20and%20silhouettes%20of%20a%20couple%20dancing%20salsa%20in%20the%20foreground%2C%20warm%20amber%20and%20crimson%20tones%2C%20dramatic%20contrast%2C%20artistic%20travel%20photography&width=1920&height=1080&seq=slh-closing-night&orientation=landscape"
-          alt="Santiago by night"
+          src="https://readdy.ai/api/search-image?query=Golden%20hour%20over%20a%20Chilean%20wine%20valley%20vineyard%20with%20neat%20rows%20of%20vines%20leading%20toward%20rolling%20hills%20and%20the%20Andes%20mountains%2C%20warm%20amber%20light%2C%20lush%20deep%20green%20leaves%2C%20rustic%20wooden%20wine%20barrels%20in%20the%20foreground%2C%20soft%20dust%20haze%2C%20cinematic%20travel%20photography%2C%20rich%20warm%20tones%2C%20serene%20and%20elegant%20atmosphere&width=1920&height=1080&seq=slh-closing-wine&orientation=landscape&nocache=true"
+          alt="Vineyard in the Colchagua Valley at golden hour"
+          title="Chilean wine valleys - Colchagua, Maipo and Casablanca"
           className="w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/55 to-black/80" />

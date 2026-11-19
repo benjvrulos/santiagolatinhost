@@ -14,6 +14,22 @@ type BudgetTier = 'low' | 'mid' | 'high';
 const plannerLanguages = ['en', 'es', 'zh', 'pt'] as const;
 type PlannerLanguage = (typeof plannerLanguages)[number];
 
+const popularDestinations = [
+  'loc_santiago',
+  'loc_patagonia',
+  'loc_atacama',
+  'loc_valparaiso',
+  'loc_colchagua',
+  'loc_chiloe',
+];
+
+const normalizeText = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+
 function resolvePlannerLanguage(lng?: string): PlannerLanguage {
   const base = (lng || 'en').toLowerCase().split('-')[0];
   return (plannerLanguages as readonly string[]).includes(base)
@@ -42,7 +58,7 @@ export default function AIPlanner() {
   const { t, i18n } = useTranslation();
   const { ref, visible } = useInView(0.06);
 
-  const [destination, setDestination] = useState('Santiago');
+  const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [travelers, setTravelers] = useState(2);
@@ -97,6 +113,22 @@ export default function AIPlanner() {
     let pool = marketExperiences.filter(
       (exp) => interests.length === 0 || interests.includes(exp.category)
     );
+
+    const needle = normalizeText(destination);
+    if (needle) {
+      const destinationPool = pool.filter((exp) => {
+        if (!exp.locationKey) return normalizeText(exp.location).includes(needle);
+        const labels = [
+          exp.location,
+          ...plannerLanguages.map((lng) =>
+            String(i18n.getFixedT(lng)(exp.locationKey as string))
+          ),
+        ];
+        return labels.some((label) => normalizeText(label).includes(needle));
+      });
+      if (destinationPool.length > 0) pool = destinationPool;
+    }
+
     const budgetPool = pool.filter((exp) => tierOf(exp.price) === budget);
     if (budgetPool.length > 0) pool = budgetPool;
 
@@ -117,7 +149,7 @@ export default function AIPlanner() {
       role: 'user',
       text: tt('ai_chat_user', {
         days,
-        destination: destination || tt('ai_destination'),
+        destination: destination || tt('ai_anywhere'),
         people: travelers,
         budget: tt(`ai_budget_${budget}`),
       }),
@@ -189,6 +221,7 @@ export default function AIPlanner() {
     setPlan(null);
     setChat([]);
     setTyping(false);
+    setDestination('');
     setStartDate('');
     setEndDate('');
     setTravelers(2);
@@ -247,6 +280,22 @@ export default function AIPlanner() {
                   className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors"
                   placeholder={t('ai_destination_placeholder')}
                 />
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {popularDestinations.map((key) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setDestination(t(key))}
+                      className={`px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors whitespace-nowrap cursor-pointer ${
+                        destination === t(key)
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-white text-gray-500 border-gray-200 hover:border-accent hover:text-accent'
+                      }`}
+                    >
+                      {t(key)}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

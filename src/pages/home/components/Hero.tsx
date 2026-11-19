@@ -30,11 +30,11 @@ export default function Hero() {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=Stylized%20artistic%20night%20scene%20of%20Santiago%20Chile%20skyline%20with%20warm%20glowing%20city%20lights%20and%20a%20blurred%20couple%20dancing%20salsa%20in%20the%20foreground%2C%20cinematic%20moody%20atmosphere%2C%20deep%20crimson%20and%20amber%20tones%2C%20dramatic%20contrast%2C%20editorial%20travel%20photography&width=1920&height=1080&seq=slh-hero-night&orientation=landscape"
-          alt="Santiago de Chile by night with Latin dance"
+          src="https://readdy.ai/api/search-image?query=Stylized%20painterly%20panorama%20of%20the%20three%20granite%20towers%20of%20Torres%20del%20Paine%20national%20park%20in%20Chilean%20Patagonia%20at%20sunrise%2C%20turquoise%20glacial%20lake%20reflecting%20the%20peaks%20in%20the%20foreground%2C%20dramatic%20layered%20clouds%20and%20golden%20rim%20light%20on%20the%20rock%20faces%2C%20deep%20teal%20emerald%20and%20warm%20ochre%20tones%20with%20rich%20dark%20shadows%2C%20artistic%20cinematic%20landscape%20photography%2C%20wide%20open%20composition%20with%20a%20calm%20sky%20area%20for%20text&width=1920&height=1080&seq=slh-hero-torres-paine&orientation=landscape&nocache=true"
+          alt="Torres del Paine, Patagonia, Chile"
           className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/80" />
       </div>
 
       {/* Content */}
@@ -58,6 +58,13 @@ export default function Hero() {
                 {index < langOptions.length - 1 && <span className="text-white/30">|</span>}
               </span>
             ))}
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 md:mb-6 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm">
+            <i className="ri-map-pin-line text-warm-light text-sm" />
+            <span className="text-white/85 text-[11px] md:text-xs font-medium tracking-[0.18em] uppercase whitespace-nowrap">
+              {t('hero_badge')}
+            </span>
           </div>
 
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold leading-[1.05] mb-5 md:mb-6">
