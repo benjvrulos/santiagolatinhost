@@ -5,14 +5,23 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
-    font-family: 'Inter', sans-serif;
-    color: #1A1A1A;
-    background-color: #FFFFFF;
+    font-family: "Inter", sans-serif;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Playfair Display", serif;
   }
 }
 

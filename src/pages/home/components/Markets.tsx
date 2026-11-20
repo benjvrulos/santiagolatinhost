@@ -16,7 +16,7 @@ export default function Markets() {
     <section id="markets" ref={ref} className="bg-white py-20 md:py-28 lg:py-32">
       <div className="section-padding">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
               {t('markets_label')}
             </span>
@@ -47,7 +47,7 @@ export default function Markets() {
             </div>
           </div>
 
-          <div className={`transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className={`transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="relative rounded-2xl overflow-hidden h-56 md:h-64">
               <img
                 src="https://readdy.ai/api/search-image?query=Stylized%20illustration%20of%20international%20travel%20connection%20between%20Asia%20and%20Chile%2C%20flight%20paths%20over%20a%20world%20map%20with%20warm%20amber%20and%20crimson%20accents%2C%20modern%20minimal%20editorial%20style&width=1000&height=640&seq=slh-markets-asia&orientation=landscape"

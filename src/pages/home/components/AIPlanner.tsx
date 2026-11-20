@@ -74,6 +74,7 @@ export default function AIPlanner() {
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [typing, setTyping] = useState(false);
   const timers = useRef<number[]>([]);
+  const usedIds = useRef<Set<string>>(new Set());
   const chatRef = useRef<HTMLDivElement>(null);
 
   const clearTimers = () => {
@@ -178,12 +179,30 @@ export default function AIPlanner() {
       return;
     }
 
+    const shuffle = <T,>(list: T[]) => {
+      const arr = [...list];
+      for (let i = arr.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    };
+    const unseen = shuffle(pool.filter((exp) => !usedIds.current.has(String(exp.id))));
+    const seen = shuffle(pool.filter((exp) => usedIds.current.has(String(exp.id))));
+    const ordered = [...unseen, ...seen];
+    const needed = days * 2;
+    const picked = ordered.slice(0, Math.min(needed, ordered.length));
+    if (unseen.length < Math.min(needed, ordered.length)) {
+      usedIds.current = new Set();
+    }
+    picked.forEach((exp) => usedIds.current.add(String(exp.id)));
+
     const next: DayPlan[] = [];
+    const perDay = Math.max(1, Math.min(2, Math.floor(picked.length / days) || 1));
     for (let d = 0; d < days; d += 1) {
-      const first = pool[(d * 2) % pool.length];
-      const second = pool[(d * 2 + 1) % pool.length];
-      const items = second && second.id !== first.id ? [first, second] : [first];
-      next.push({ day: d + 1, items });
+      const items = picked.slice(d * perDay, d * perDay + perDay);
+      const fallback = items.length > 0 ? items : [picked[d % picked.length]];
+      next.push({ day: d + 1, items: fallback });
     }
     const totalUnique = new Set(
       next.flatMap((day) => day.items.map((item) => item.id))
@@ -218,6 +237,7 @@ export default function AIPlanner() {
 
   const reset = () => {
     clearTimers();
+    usedIds.current = new Set();
     setPlan(null);
     setChat([]);
     setTyping(false);

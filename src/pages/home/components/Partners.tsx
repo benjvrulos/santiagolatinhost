@@ -73,7 +73,7 @@ export default function Partners() {
       <div className="section-padding">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           {/* Left */}
-          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
               {t('partners_label')}
             </span>
@@ -113,7 +113,7 @@ export default function Partners() {
           </div>
 
           {/* Form */}
-          <div className={`transition-all duration-1000 delay-150 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className={`transition-all duration-1000 delay-150 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div id="partner-form" className="bg-surface rounded-2xl p-6 md:p-8 border border-gray-100">
               {submitted ? (
                 <div className="text-center py-10">

@@ -15,7 +15,7 @@ export default function Scale() {
     <section id="scale" ref={ref} className="bg-surface py-20 md:py-28 lg:py-32">
       <div className="section-padding">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
               {t('scale_label')}
             </span>
@@ -30,7 +30,7 @@ export default function Scale() {
             </p>
           </div>
 
-          <div className={`space-y-4 transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className={`space-y-4 transition-all duration-1000 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             {tiers.map((tier, index) => (
               <div key={tier.key} className="flex items-center gap-4 bg-white rounded-xl p-5 border border-gray-100">
                 <div className="w-12 h-12 flex items-center justify-center rounded-full bg-accent/10 flex-shrink-0">

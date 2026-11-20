@@ -12,7 +12,7 @@ export default function Founder() {
       <div className="section-padding">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
           {/* Photo */}
-          <div className={`lg:col-span-2 transition-all duration-1000 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+          <div className={`lg:col-span-2 transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0">
               <img
                 src="https://readdy.ai/api/search-image?query=Friendly%20professional%20portrait%20of%20a%20young%20Chilean%20man%20in%20smart%20casual%20clothing%20with%20arms%20crossed%2C%20warm%20soft%20studio%20lighting%2C%20neutral%20cream%20background%2C%20confident%20approachable%20expression%2C%20editorial%20founder%20portrait%20photography&width=800&height=1000&seq=slh-founder&orientation=portrait"
@@ -23,7 +23,7 @@ export default function Founder() {
           </div>
 
           {/* Content */}
-          <div className={`lg:col-span-3 transition-all duration-1000 delay-150 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className={`lg:col-span-3 transition-all duration-1000 delay-150 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block text-warm font-medium text-xs md:text-sm tracking-[0.25em] uppercase mb-4">
               {t('founder_label')}
             </span>
