@@ -26,6 +26,26 @@ export default {
   exp_label_recommendations: 'Recommendations',
   exp_label_price_unit: 'per person',
 
+  // Generic detail for marketplace experiences
+  exp_not_found_title: 'We could not find this experience',
+  exp_not_found_desc: 'Check the link or go back home to explore all available experiences.',
+  exp_fallback_desc: 'This experience takes place in {{location}} with {{provider}}, a local supplier selected by Chile Latin Host. Your booking includes advance coordination, bilingual support and confirmation of all details by WhatsApp or email before your travel date.\n\nWe work with small groups so you can enjoy the experience calmly and with close attention. If you need to adjust times, group size or any special request, our team coordinates everything directly with the local supplier.\n\nOnce your booking is confirmed you will receive the exact meeting point and recommendations to arrive without setbacks.',
+  exp_fallback_purpose: 'Experience {{location}} with a trusted local supplier and bilingual coordination from start to finish.',
+  exp_fallback_duration_hours: '{{count}} hours',
+  exp_fallback_group: 'Small group',
+  exp_fallback_includes: 'Advance coordination of the experience. Bilingual support. Confirmation of schedule and meeting point by WhatsApp or email.',
+  exp_fallback_not_includes: 'Transport, food and personal expenses, unless stated in the description.',
+  exp_fallback_meeting: 'Confirmed at booking according to the local supplier.',
+  exp_fallback_price_note: 'Price per person. Final price is confirmed at booking.',
+  exp_fallback_time1: '0:00',
+  exp_fallback_act1: 'Meet your bilingual host at the agreed point and welcome the group.',
+  exp_fallback_time2: '0:30',
+  exp_fallback_act2: 'The main activity begins together with the local supplier.',
+  exp_fallback_time3: '1:30',
+  exp_fallback_act3: 'Break for photos, questions and host recommendations.',
+  exp_fallback_time4: '2:30',
+  exp_fallback_act4: 'Wrap up the experience and coordinate the next steps.',
+
   // Booking form
   exp_booking_label: 'Booking',
   exp_booking_title: 'Book your experience',

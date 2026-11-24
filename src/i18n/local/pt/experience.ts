@@ -26,6 +26,26 @@ export default {
   exp_label_recommendations: 'Recomendações',
   exp_label_price_unit: 'por pessoa',
 
+  // Detalhe genérico para experiências do marketplace
+  exp_not_found_title: 'Não encontramos esta experiência',
+  exp_not_found_desc: 'Verifique o link ou volte ao início para explorar todas as experiências disponíveis.',
+  exp_fallback_desc: 'Esta experiência acontece em {{location}} com {{provider}}, um fornecedor local selecionado pela Chile Latin Host. A reserva inclui coordenação prévia, acompanhamento bilíngue e confirmação dos detalhes por WhatsApp ou e-mail antes da data da viagem.\n\nTrabalhamos com grupos pequenos para que você viva a experiência com calma e atenção próxima. Se precisar ajustar horários, número de pessoas ou algum pedido especial, nossa equipe coordena tudo diretamente com o fornecedor local.\n\nAo confirmar sua reserva você receberá o ponto de encontro exato e recomendações para chegar sem imprevistos.',
+  exp_fallback_purpose: 'Viva {{location}} com um fornecedor local de confiança e coordenação bilíngue do início ao fim.',
+  exp_fallback_duration_hours: '{{count}} horas',
+  exp_fallback_group: 'Grupo pequeno',
+  exp_fallback_includes: 'Coordenação prévia da experiência. Acompanhamento bilíngue. Confirmação de horários e ponto de encontro por WhatsApp ou e-mail.',
+  exp_fallback_not_includes: 'Transporte, alimentação e despesas pessoais, salvo indicação na descrição.',
+  exp_fallback_meeting: 'Confirmado no momento da reserva conforme o fornecedor local.',
+  exp_fallback_price_note: 'Preço por pessoa. O preço final é confirmado na reserva.',
+  exp_fallback_time1: '0:00',
+  exp_fallback_act1: 'Encontro com o host bilíngue no ponto combinado e boas-vindas ao grupo.',
+  exp_fallback_time2: '0:30',
+  exp_fallback_act2: 'Início da atividade principal junto ao fornecedor local.',
+  exp_fallback_time3: '1:30',
+  exp_fallback_act3: 'Pausa para fotos, dúvidas e recomendações do host.',
+  exp_fallback_time4: '2:30',
+  exp_fallback_act4: 'Encerramento da experiência e coordenação dos próximos passos.',
+
   // Booking form
   exp_booking_label: 'Reserva',
   exp_booking_title: 'Reserve a sua experiência',

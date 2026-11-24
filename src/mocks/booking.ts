@@ -1,9 +1,9 @@
 // Sample data for a booking that has already been purchased.
 // Replace these constants with real order data once the backend is connected.
 export const bookingMeta = {
-  reference: 'SLH-2026-10482',
+  reference: 'CLH-2026-11284',
   guests: 2,
-  paidAt: '2026-10-14T18:42:00-03:00',
+  paidAt: '2026-11-22T18:42:00-03:00',
 };
 
 export const bookingCustomer = {

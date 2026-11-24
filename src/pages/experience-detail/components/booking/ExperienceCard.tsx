@@ -1,27 +1,23 @@
+import { useTranslation } from 'react-i18next';
+
 interface ExperienceCardProps {
   img: string;
   title: string;
   subtitle: string;
 }
 
-export default function ExperienceCard({
-  img,
-  title,
-  subtitle,
-}: ExperienceCardProps) {
+export default function ExperienceCard({ img, title, subtitle }: ExperienceCardProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="mb-6">
       <p className="text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-3">
-        Your experience
+        {t('exp_booking_experience_label')}
       </p>
       <div className="flex items-center gap-4">
         <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface">
           {img ? (
-            <img
-              src={img}
-              alt={title}
-              className="w-full h-full object-cover object-top"
-            />
+            <img src={img} alt={title} className="w-full h-full object-cover object-top" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-300">
               <i className="ri-image-line text-xl" />

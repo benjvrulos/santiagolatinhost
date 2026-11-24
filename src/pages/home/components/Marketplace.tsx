@@ -48,12 +48,7 @@ export default function Marketplace() {
   };
 
   const openExperience = (exp: MarketExperience) => {
-    if (exp.experienceId) {
-      navigate(`/experiencia/${exp.experienceId}`);
-      return;
-    }
-    const el = document.querySelector('#reserva');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    navigate(`/experiencia/${exp.experienceId ?? exp.id}`);
   };
 
   return (
@@ -249,7 +244,7 @@ export default function Marketplace() {
                         onClick={() => openExperience(exp)}
                         className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-primary text-white text-xs font-semibold rounded-full hover:bg-accent transition-colors whitespace-nowrap cursor-pointer"
                       >
-                        {exp.experienceId ? t('mkt_view') : t('mkt_interest')}
+                        {t('mkt_view')}
                         <i className="ri-arrow-right-line" />
                       </button>
                     </div>

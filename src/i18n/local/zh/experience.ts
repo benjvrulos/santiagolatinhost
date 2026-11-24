@@ -26,6 +26,26 @@ export default {
   exp_label_recommendations: '建议',
   exp_label_price_unit: '每人',
 
+  // 市集体验通用详情
+  exp_not_found_title: '未找到该体验',
+  exp_not_found_desc: '请检查链接，或返回首页浏览所有可预订的体验。',
+  exp_fallback_desc: '该体验在{{location}}由{{provider}}提供，是 Chile Latin Host 精选的本地供应商。预订包含提前协调、双语陪同，并在出行日期前通过 WhatsApp 或邮件确认所有细节。\n\n我们采用小团形式，让你从容享受体验并获得贴心的关注。如需调整时间、人数或提出特别需求，我们的团队会直接与本地供应商协调。\n\n确认预订后，你将收到准确的集合地点以及顺利抵达的建议。',
+  exp_fallback_purpose: '与值得信赖的本地供应商一起体验{{location}}，全程提供双语协调服务。',
+  exp_fallback_duration_hours: '{{count}} 小时',
+  exp_fallback_group: '小团',
+  exp_fallback_includes: '体验的提前协调。双语陪同。通过 WhatsApp 或邮件确认时间与集合地点。',
+  exp_fallback_not_includes: '交通、餐饮及个人消费，描述中另有说明的除外。',
+  exp_fallback_meeting: '预订时按本地供应商安排确认。',
+  exp_fallback_price_note: '每人价格，最终价格以预订确认为准。',
+  exp_fallback_time1: '0:00',
+  exp_fallback_act1: '在约定地点与双语向导会合，并向团队致欢迎词。',
+  exp_fallback_time2: '0:30',
+  exp_fallback_act2: '与本地供应商一起开始主要活动。',
+  exp_fallback_time3: '1:30',
+  exp_fallback_act3: '休息拍照、答疑，并听取向导的推荐。',
+  exp_fallback_time4: '2:30',
+  exp_fallback_act4: '结束体验并协调后续安排。',
+
   // 预订表单
   exp_booking_label: '预订',
   exp_booking_title: '预订你的体验',

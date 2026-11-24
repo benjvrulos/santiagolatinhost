@@ -1,7 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "@/components/feature/Navbar";
-import Footer from "@/components/feature/Footer";
 import SuccessBanner from "@/pages/checkout/components/SuccessBanner";
 import BookingDetailsCard from "@/pages/checkout/components/BookingDetailsCard";
 import GuestDetailsCard from "@/pages/checkout/components/GuestDetailsCard";
@@ -49,7 +47,6 @@ export default function CheckoutPage({
   if (!exp && !order) {
     return (
       <div className="min-h-screen bg-surface flex flex-col">
-        <Navbar />
         <div className="flex-1 flex items-center justify-center px-6 pt-16 md:pt-20">
           <div className="text-center max-w-md">
             <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
@@ -70,7 +67,6 @@ export default function CheckoutPage({
             </button>
           </div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -117,8 +113,6 @@ export default function CheckoutPage({
 
   return (
     <div className="min-h-screen bg-surface flex flex-col">
-      <Navbar />
-
       <main className="flex-1 pt-16 md:pt-20">
         {/* Success header */}
         <section className="section-padding py-12 md:py-16">
@@ -226,8 +220,6 @@ export default function CheckoutPage({
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import Navbar from "@/components/feature/Navbar";
+import Footer from "@/components/feature/Footer";
 import Hero from "./components/Hero";
 import AIPlanner from "./components/AIPlanner";
 import Tonight from "./components/Tonight";

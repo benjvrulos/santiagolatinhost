@@ -26,6 +26,26 @@ export default {
   exp_label_recommendations: 'Recomendaciones',
   exp_label_price_unit: 'por persona',
 
+  // Ficha genérica para experiencias del marketplace
+  exp_not_found_title: 'No encontramos esta experiencia',
+  exp_not_found_desc: 'Revisa el enlace o vuelve al inicio para explorar todas las experiencias disponibles.',
+  exp_fallback_desc: 'Esta experiencia se realiza en {{location}} con {{provider}}, un proveedor local seleccionado por Chile Latin Host. La reserva incluye coordinación previa, acompañamiento bilingüe y confirmación de los detalles por WhatsApp o email antes de la fecha del viaje.\n\nTrabajamos con grupos pequeños para que puedas vivir la experiencia con calma y atención cercana. Si necesitas ajustar horarios, cantidad de personas o algún requerimiento especial, nuestro equipo coordina todo directamente con el proveedor local.\n\nAl confirmar tu reserva recibirás el punto de encuentro exacto y las recomendaciones para llegar sin contratiempos.',
+  exp_fallback_purpose: 'Vive {{location}} con un proveedor local de confianza y coordinación bilingüe de principio a fin.',
+  exp_fallback_duration_hours: '{{count}} horas',
+  exp_fallback_group: 'Grupo pequeño',
+  exp_fallback_includes: 'Coordinación previa de la experiencia. Acompañamiento bilingüe. Confirmación de horarios y punto de encuentro por WhatsApp o email.',
+  exp_fallback_not_includes: 'Transporte, alimentación y gastos personales, salvo que se indiquen en la descripción.',
+  exp_fallback_meeting: 'Se confirma al momento de la reserva según el proveedor local.',
+  exp_fallback_price_note: 'Precio por persona. El precio final se confirma al reservar.',
+  exp_fallback_time1: '0:00',
+  exp_fallback_act1: 'Encuentro con el host bilingüe en el punto acordado y bienvenida al grupo.',
+  exp_fallback_time2: '0:30',
+  exp_fallback_act2: 'Inicio de la actividad principal junto al proveedor local.',
+  exp_fallback_time3: '1:30',
+  exp_fallback_act3: 'Pausa para fotografías, consultas y recomendaciones del host.',
+  exp_fallback_time4: '2:30',
+  exp_fallback_act4: 'Cierre de la experiencia y coordinación de los siguientes pasos.',
+
   // Formulario de reserva
   exp_booking_label: 'Reserva',
   exp_booking_title: 'Reserva tu experiencia',

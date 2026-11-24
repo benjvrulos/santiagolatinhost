@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 interface BookingSummaryProps {
   experienceName: string;
@@ -10,7 +10,7 @@ interface BookingSummaryProps {
 }
 
 function currencySymbol(currency: string): string {
-  return currency === "USD" ? "US$" : currency;
+  return currency === 'USD' ? 'US$' : currency;
 }
 
 export default function BookingSummary({
@@ -22,36 +22,33 @@ export default function BookingSummary({
   currency,
 }: BookingSummaryProps) {
   const { t } = useTranslation();
-  const hasPrice = typeof pricePerPerson === "number" && pricePerPerson > 0;
+  const hasPrice = typeof pricePerPerson === 'number' && pricePerPerson > 0;
   const total = hasPrice ? (pricePerPerson as number) * guests : 0;
   const money = (amount: number) => `${currencySymbol(currency)}${amount}`;
+
   const rows = [
-    { label: t("exp_booking_experience"), value: experienceName || "—" },
-    { label: t("exp_label_date"), value: dateLabel || "—" },
-    { label: t("exp_label_schedule"), value: timeLabel || "—" },
-    { label: t("exp_booking_guests"), value: String(guests) },
+    { label: t('exp_booking_experience'), value: experienceName || '—' },
+    { label: t('exp_label_date'), value: dateLabel || '—' },
+    { label: t('exp_label_schedule'), value: timeLabel || '—' },
+    { label: t('exp_booking_guests'), value: String(guests) },
   ];
+
   return (
     <div className="rounded-xl border border-gray-200 bg-surface/70 p-4 md:p-5">
       <p className="text-gray-400 text-[11px] font-semibold uppercase tracking-wider mb-3">
-        {t("exp_booking_summary")}
+        {t('exp_booking_summary')}
       </p>
 
       <dl className="space-y-2">
         {rows.map((row) => (
-          <div
-            key={row.label}
-            className="flex items-start justify-between gap-4 text-sm"
-          >
+          <div key={row.label} className="flex items-start justify-between gap-4 text-sm">
             <dt className="text-gray-500 whitespace-nowrap">{row.label}</dt>
             <dd className="text-primary font-medium text-right">{row.value}</dd>
           </div>
         ))}
         {hasPrice && (
           <div className="flex items-start justify-between gap-4 text-sm">
-            <dt className="text-gray-500 whitespace-nowrap">
-              {t("exp_booking_price_per_person")}
-            </dt>
+            <dt className="text-gray-500 whitespace-nowrap">{t('exp_booking_price_per_person')}</dt>
             <dd className="text-primary font-medium text-right">
               {money(pricePerPerson as number)}
             </dd>
@@ -61,14 +58,12 @@ export default function BookingSummary({
 
       {hasPrice ? (
         <div className="mt-3 pt-3 border-t border-gray-200 flex items-center justify-between">
-          <span className="text-primary text-sm font-semibold">Total</span>
-          <span className="font-display text-xl text-primary font-bold">
-            {money(total)}
-          </span>
+          <span className="text-primary text-sm font-semibold">{t('exp_booking_total')}</span>
+          <span className="font-display text-xl text-primary font-bold">{money(total)}</span>
         </div>
       ) : (
         <p className="mt-3 pt-3 border-t border-gray-200 text-gray-500 text-xs leading-relaxed">
-          Final price will be confirmed by our team.
+          {t('exp_booking_final_price')}
         </p>
       )}
     </div>
