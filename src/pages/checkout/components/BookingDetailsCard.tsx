@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 interface BookingDetailsCardProps {
   img: string;
@@ -22,38 +22,24 @@ export default function BookingDetailsCard({
   const { t } = useTranslation();
 
   const rows = [
-    { icon: "ri-calendar-line", label: t("ck_date"), value: dateLabel },
-    { icon: "ri-time-line", label: t("ck_time"), value: timeLabel },
-    {
-      icon: "ri-global-line",
-      label: t("ck_timezone"),
-      value: "Santiago, Chile (GMT-3)",
-    },
-    { icon: "ri-group-line", label: t("ck_guests"), value: String(guests) },
-    {
-      icon: "ri-map-pin-line",
-      label: t("ck_meeting_point"),
-      value: meetingPoint,
-    },
+    { icon: 'ri-calendar-line', label: t('ck_date'), value: dateLabel },
+    { icon: 'ri-time-line', label: t('ck_time'), value: timeLabel },
+    { icon: 'ri-global-line', label: t('ck_timezone'), value: 'Santiago, Chile (GMT-3)' },
+    { icon: 'ri-group-line', label: t('ck_guests'), value: String(guests) },
+    { icon: 'ri-map-pin-line', label: t('ck_meeting_point'), value: meetingPoint },
   ];
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-7">
       <div className="flex items-center gap-2 mb-5">
         <i className="ri-file-list-3-line text-accent text-lg" />
-        <h2 className="font-display text-lg text-primary font-bold">
-          {t("ck_details_label")}
-        </h2>
+        <h2 className="font-display text-lg text-primary font-bold">{t('ck_details_label')}</h2>
       </div>
 
       <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
         <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-surface">
           {img ? (
-            <img
-              src={img}
-              alt={title}
-              className="w-full h-full object-cover object-top"
-            />
+            <img src={img} alt={title} className="w-full h-full object-cover object-top" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-300">
               <i className="ri-image-line text-xl" />
@@ -77,12 +63,8 @@ export default function BookingDetailsCard({
               <i className={`${row.icon} text-accent text-sm`} />
             </div>
             <div className="min-w-0">
-              <dt className="text-gray-400 text-xs uppercase tracking-wider">
-                {row.label}
-              </dt>
-              <dd className="text-primary text-sm font-medium mt-0.5">
-                {row.value || "—"}
-              </dd>
+              <dt className="text-gray-400 text-xs uppercase tracking-wider">{row.label}</dt>
+              <dd className="text-primary text-sm font-medium mt-0.5">{row.value || '—'}</dd>
             </div>
           </div>
         ))}

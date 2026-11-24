@@ -114,6 +114,12 @@ export default {
   ck_add_calendar: '添加到日历',
   ck_back_home: '返回首页',
   ck_not_found: '未找到该预订。',
+  ck_itinerary_label: '行程详情',
+  ck_itinerary_bundle: '多项体验行程',
+  ck_itinerary_dates: '旅行日期',
+  ck_itinerary_days: '天数',
+  ck_itinerary_day: '第 {{count}} 天',
+  ck_itinerary_experiences: '包含的体验',
   ck_not_found_desc: '请检查链接，或返回首页浏览体验项目。',
 
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
@@ -256,7 +262,7 @@ export default {
   exp7_meeting_point: '市中心舞蹈工作室，预订时确认。',
   exp7_price_note: 'US$35 / 人。5 人以上团体享折扣。',
   exp7_price_amount: 'US$35',
-  exp7_date: '2026年11月7日，星期六',
+  exp7_date: '2026年12月12日，星期六',
   exp7_schedule: '23:30 – 03:00',
   exp7_requirements: '无需任何舞蹈基础。',
   exp7_recommendations: '建议穿着舒适衣物和适合跳舞的鞋子。',

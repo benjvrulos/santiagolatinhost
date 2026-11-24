@@ -1,45 +1,37 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const { t } = useTranslation();
 
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   const quickLinks = [
-    { label: t("nav_inicio"), href: "#inicio" },
-    { label: t("nav_ai"), href: "#ai-planner" },
-    { label: t("nav_tonight"), href: "#tonight" },
-    { label: t("nav_experiences"), href: "#experiences" },
-    { label: t("nav_how"), href: "#como-funciona" },
-    { label: t("nav_book"), href: "#reserva" },
+    { label: t('nav_inicio'), href: '#inicio' },
+    { label: t('nav_ai'), href: '#ai-planner' },
+    { label: t('nav_tonight'), href: '#tonight' },
+    { label: t('nav_experiences'), href: '#experiences' },
+    { label: t('nav_how'), href: '#como-funciona' },
+    { label: t('nav_book'), href: '#reserva' },
   ];
 
   const destinations = [
-    t("loc_santiago"),
-    t("loc_patagonia"),
-    t("loc_atacama"),
-    t("loc_valparaiso"),
-    t("loc_colchagua"),
-    t("loc_chiloe"),
-    t("loc_rapa_nui"),
-    t("loc_elqui"),
+    t('loc_santiago'),
+    t('loc_patagonia'),
+    t('loc_atacama'),
+    t('loc_valparaiso'),
+    t('loc_colchagua'),
+    t('loc_chiloe'),
+    t('loc_rapa_nui'),
+    t('loc_elqui'),
   ];
 
   const socialLinks = [
-    {
-      icon: "ri-instagram-line",
-      label: "Instagram",
-      href: "https://www.instagram.com/chilelatinhost/",
-    },
-    { icon: "ri-youtube-line", label: "YouTube", href: "https://youtube.com" },
-    {
-      icon: "ri-whatsapp-line",
-      label: "WhatsApp",
-      href: "https://wa.me/56923895542",
-    },
+    { icon: 'ri-instagram-line', label: 'Instagram', href: 'https://www.instagram.com/chilelatinhost/' },
+    { icon: 'ri-youtube-line', label: 'YouTube', href: 'https://youtube.com' },
+    { icon: 'ri-whatsapp-line', label: 'WhatsApp', href: 'https://wa.me/56923895542' },
   ];
 
   return (
@@ -56,7 +48,7 @@ export default function Footer() {
                 className="h-24 md:h-32 w-auto object-contain mb-5"
               />
               <p className="text-white/75 text-sm leading-relaxed max-w-xs">
-                {t("footer_tagline")}
+                {t('footer_tagline')}
               </p>
               <div className="flex items-center gap-3 mt-6">
                 {socialLinks.map((social) => (
@@ -77,17 +69,14 @@ export default function Footer() {
             {/* Destinations */}
             <div className="lg:col-span-4">
               <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-                {t("footer_destinations")}
+                {t('footer_destinations')}
               </h4>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
                 {destinations.map((name) => (
                   <li key={name} className="min-w-0">
                     <a
                       href="#experiences"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollTo("#experiences");
-                      }}
+                      onClick={(e) => { e.preventDefault(); scrollTo('#experiences'); }}
                       className="block text-white/70 text-sm leading-snug hover:text-white transition-colors cursor-pointer break-words"
                     >
                       {name}
@@ -100,17 +89,14 @@ export default function Footer() {
             {/* Quick links */}
             <div className="lg:col-span-2">
               <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-                {t("footer_links")}
+                {t('footer_links')}
               </h4>
               <ul className="space-y-2.5">
                 {quickLinks.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollTo(link.href);
-                      }}
+                      onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
                       className="text-white/70 text-sm hover:text-white transition-colors cursor-pointer"
                     >
                       {link.label}
@@ -123,7 +109,7 @@ export default function Footer() {
             {/* Contact */}
             <div className="lg:col-span-3 lg:pl-2">
               <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">
-                {t("footer_contact")}
+                {t('footer_contact')}
               </h4>
               <ul className="space-y-3">
                 <li>
@@ -148,10 +134,10 @@ export default function Footer() {
                 </li>
                 <li className="text-white/70 text-sm inline-flex items-center gap-2">
                   <i className="ri-map-pin-line text-base shrink-0" />
-                  {t("footer_address")}
+                  {t('footer_address')}
                 </li>
                 <li className="text-white/60 text-xs leading-relaxed pt-1">
-                  {t("footer_hours")}
+                  {t('footer_hours')}
                 </li>
               </ul>
             </div>
@@ -160,8 +146,7 @@ export default function Footer() {
           {/* Bottom */}
           <div className="border-t border-white/20 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-white/60 text-xs text-center sm:text-left">
-              {new Date().getFullYear()} {t("footer_brand")}.{" "}
-              {t("footer_copyright")}
+              {new Date().getFullYear()} {t('footer_brand')}. {t('footer_copyright')}
             </p>
             <div className="flex items-center gap-4">
               <span className="text-white/50 text-xs">ES</span>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import useInView from '@/hooks/useInView';
+import { buildItineraryOrder, saveItineraryOrder } from '@/lib/itinerary';
 import { experienceLocation, experienceName } from '@/i18n/experienceText';
 import {
   marketCategories,
@@ -30,6 +32,30 @@ const normalizeText = (value: string) =>
     .replace(/[\u0300-\u036f]/g, '')
     .trim();
 
+function toInputDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function defaultStartDate(): string {
+  return toInputDate(new Date());
+}
+
+function defaultEndDate(): string {
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+  return toInputDate(date);
+}
+
+function addDays(isoDate: string, days: number): string {
+  const date = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return isoDate;
+  date.setDate(date.getDate() + days);
+  return toInputDate(date);
+}
+
 function resolvePlannerLanguage(lng?: string): PlannerLanguage {
   const base = (lng || 'en').toLowerCase().split('-')[0];
   return (plannerLanguages as readonly string[]).includes(base)
@@ -56,11 +82,12 @@ function tierOf(price: number): BudgetTier {
 
 export default function AIPlanner() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const { ref, visible } = useInView(0.06);
 
   const [destination, setDestination] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
   const [travelers, setTravelers] = useState(2);
   const [budget, setBudget] = useState<BudgetTier>('mid');
   const [language, setLanguage] = useState<PlannerLanguage>(() =>
@@ -242,8 +269,8 @@ export default function AIPlanner() {
     setChat([]);
     setTyping(false);
     setDestination('');
-    setStartDate('');
-    setEndDate('');
+    setStartDate(defaultStartDate());
+    setEndDate(defaultEndDate());
     setTravelers(2);
     setBudget('mid');
     setInterests(['dance', 'food']);
@@ -256,8 +283,24 @@ export default function AIPlanner() {
     : 0;
 
   const handleBook = () => {
-    const el = document.querySelector('#reserva');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (!plan || plan.length === 0) return;
+
+    const safeStart = startDate || defaultStartDate();
+    const safeEnd = endDate && endDate >= safeStart ? endDate : addDays(safeStart, 2);
+
+    const order = buildItineraryOrder(
+      plan.map((day) => ({
+        day: day.day,
+        itemIds: day.items.map((item) => item.id),
+      })),
+      travelers,
+      safeStart,
+      safeEnd,
+      planLang
+    );
+
+    saveItineraryOrder(order);
+    navigate('/itinerario/compra');
   };
 
   return (
@@ -326,7 +369,14 @@ export default function AIPlanner() {
                   <input
                     type="date"
                     value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
+                    min={toInputDate(new Date())}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setStartDate(value);
+                      if (value && (!endDate || endDate < value)) {
+                        setEndDate(addDays(value, 2));
+                      }
+                    }}
                     className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors"
                   />
                 </div>
@@ -337,7 +387,11 @@ export default function AIPlanner() {
                   <input
                     type="date"
                     value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
+                    min={startDate || toInputDate(new Date())}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setEndDate(value);
+                    }}
                     className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-primary text-sm focus:outline-none focus:border-accent transition-colors"
                   />
                 </div>
@@ -525,8 +579,9 @@ export default function AIPlanner() {
                     onClick={handleBook}
                     className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent text-white text-sm font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap cursor-pointer"
                   >
-                    <i className="ri-calendar-check-line" />
-                    {t('ai_reserve')}
+                    <i className="ri-shopping-bag-3-line" />
+                    {t('ai_buy_itinerary')}
+                    <i className="ri-arrow-right-line" />
                   </button>
                   <p className="mt-3 text-gray-400 text-[11px] leading-relaxed">
                     {t('ai_prototype_note')}

@@ -1,415 +1,233 @@
-import SuccessBanner from "@/pages/checkout/components/SucessBanner";
+import { useTranslation } from "react-i18next";
+import { useParams, useNavigate } from "react-router-dom";
+import Navbar from "@/components/feature/Navbar";
+import Footer from "@/components/feature/Footer";
+import SuccessBanner from "@/pages/checkout/components/SuccessBanner";
 import BookingDetailsCard from "@/pages/checkout/components/BookingDetailsCard";
 import GuestDetailsCard from "@/pages/checkout/components/GuestDetailsCard";
 import PaymentCard from "@/pages/checkout/components/PaymentCard";
 import OrderSummary from "@/pages/checkout/components/OrderSummary";
 import NextSteps from "@/pages/checkout/components/NextSteps";
+import ItineraryDetailsCard from "@/pages/checkout/components/ItineraryDetailsCard";
+import ItinerarySummary from "@/pages/checkout/components/ItinerarySummary";
+import {
+  formatOrderRange,
+  getItineraryTotals,
+  loadItineraryOrder,
+} from "@/lib/itinerary";
+import {
+  experiencesData,
+  experienceSchedules,
+  experiencePricing,
+} from "@/mocks/experiences";
+import { bookingMeta, bookingCustomer, bookingPayment } from "@/mocks/booking";
+import { formatScheduleDate, formatScheduleTime } from "@/utils/formatSchedule";
 
-import { useTranslation } from "react-i18next";
-import { useCheckoutPage } from "@/hooks/useCheckoutPage";
+const WHATSAPP_HREF = "https://wa.me/56923895542";
 
-import { WHATSAPP_HREF } from "@/constants/booking.constants";
+function toGcalDate(iso: string): string {
+  return new Date(iso)
+    .toISOString()
+    .replace(/\.\d{3}Z$/, "Z")
+    .replace(/[-:]/g, "");
+}
 
-export default function CheckoutPage() {
-  const { t } = useTranslation();
+interface CheckoutPageProps {
+  itineraryMode?: boolean;
+}
 
-  const {
-    cancelled,
-    isValidBookingId,
-    booking,
-    payment,
-    isLoading,
-    hasError,
-    isPaid,
-    isExpired,
-    isPaymentCancelled,
-    isRetryingPayment,
-    checkoutData,
-    handleRetryPayment,
-    handleModifyBooking,
-    navigate,
-  } = useCheckoutPage();
+export default function CheckoutPage({
+  itineraryMode = false,
+}: CheckoutPageProps) {
+  const { id } = useParams<{ id: string }>();
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
-  /*
-   * =========================
-   * INVALID BOOKING ID
-   * =========================
-   */
+  const exp = id ? experiencesData[id] : undefined;
+  const order = itineraryMode ? loadItineraryOrder() : null;
 
-  if (!isValidBookingId) {
+  if (!exp && !order) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="text-center max-w-md">
-          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
-            <i className="ri-error-warning-line text-2xl text-accent" />
-          </div>
-
-          <h1 className="font-display text-2xl text-primary font-bold mb-3">
-            {t("ck_not_found")}
-          </h1>
-
-          <button
-            onClick={() => navigate("/")}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent text-white"
-          >
-            <i className="ri-arrow-left-line" />
-
-            {t("ck_back_home")}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  /*
-   * =========================
-   * LOADING
-   * =========================
-   */
-
-  if (isLoading) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="flex items-center gap-3 text-gray-500">
-          <i className="ri-loader-4-line animate-spin text-xl" />
-
-          <span>{t("ck_loading")}</span>
-        </div>
-      </div>
-    );
-  }
-
-  /*
-   * =========================
-   * ERROR / NOT FOUND
-   * =========================
-   */
-
-  if (hasError || !booking || (!cancelled && !payment)) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="text-center max-w-md">
-          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
-            <i className="ri-error-warning-line text-2xl text-accent" />
-          </div>
-
-          <h1 className="font-display text-2xl text-primary font-bold mb-3">
-            {t("ck_not_found")}
-          </h1>
-
-          <p className="text-gray-600 text-sm leading-relaxed mb-6">
-            {t("ck_not_found_desc")}
-          </p>
-
-          <button
-            onClick={() => navigate("/")}
-            className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer whitespace-nowrap"
-          >
-            <i className="ri-arrow-left-line" />
-
-            {t("ck_back_home")}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  /*
-   * =========================
-   * EXPIRED BOOKING
-   * =========================
-   */
-
-  if (isExpired) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="text-center max-w-md">
-          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
-            <i className="ri-time-line text-2xl text-amber-500" />
-          </div>
-
-          <h1 className="font-display text-2xl text-primary font-bold mb-3">
-            {t("ck_expired_title", {
-              defaultValue: "Your booking has expired",
-            })}
-          </h1>
-
-          <p className="text-gray-600 text-sm leading-relaxed mb-2">
-            {t("ck_expired_desc", {
-              defaultValue:
-                "The time available to complete your payment has expired.",
-            })}
-          </p>
-
-          {isPaymentCancelled && (
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              {t("ck_expired_payment", {
-                defaultValue:
-                  "The payment was cancelled and no charge was made.",
-              })}
+      <div className="min-h-screen bg-surface flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center px-6 pt-16 md:pt-20">
+          <div className="text-center max-w-md">
+            <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
+              <i className="ri-error-warning-line text-2xl text-accent" />
+            </div>
+            <h1 className="font-display text-2xl text-primary font-bold mb-3">
+              {t("ck_not_found")}
+            </h1>
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              {t("ck_not_found_desc")}
             </p>
-          )}
-
-          {!isPaymentCancelled && (
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              {t("ck_expired_payment_pending", {
-                defaultValue: "The booking is no longer active.",
-              })}
-            </p>
-          )}
-
-          <button
-            type="button"
-            onClick={() => {
-              localStorage.removeItem(`pendingBooking:${booking.schedule.id}`);
-
-              navigate(`/experience/${booking.schedule.experience.slug}`);
-            }}
-            className="inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer"
-          >
-            <i className="ri-refresh-line" />
-
-            {t("ck_book_again", {
-              defaultValue: "Book again",
-            })}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  /*
-   * =========================
-   * USER CANCELLED STRIPE
-   * =========================
-   */
-
-  if (cancelled) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="text-center max-w-md">
-          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
-            <i className="ri-close-circle-line text-2xl text-amber-500" />
-          </div>
-
-          <h1 className="font-display text-2xl text-primary font-bold mb-3">
-            {t("ck_cancelled_title")}
-          </h1>
-
-          <p className="text-gray-600 text-sm leading-relaxed mb-2">
-            {t("ck_cancelled_desc")}
-          </p>
-
-          <p className="text-gray-500 text-sm leading-relaxed mb-6">
-            {t("ck_cancelled_hold")}
-          </p>
-
-          <div className="flex flex-col gap-3">
             <button
-              onClick={handleRetryPayment}
-              disabled={isRetryingPayment}
-              className="inline-flex items-center justify-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              onClick={() => navigate("/")}
+              className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer whitespace-nowrap"
             >
-              {isRetryingPayment ? (
-                <>
-                  <i className="ri-loader-4-line animate-spin" />
-
-                  {t("ck_retrying_payment")}
-                </>
-              ) : (
-                <>
-                  <i className="ri-bank-card-line" />
-
-                  {t("ck_retry_payment")}
-                </>
-              )}
-            </button>
-
-            <button
-              type="button"
-              onClick={handleModifyBooking}
-              className="w-full px-6 py-3 rounded-full border border-gray-200 text-primary font-medium hover:border-accent hover:text-accent transition-colors"
-            >
-              {t("checkout_modify_booking", {
-                defaultValue: "Modify booking",
-              })}
+              <i className="ri-arrow-left-line" />
+              {t("ck_back_home")}
             </button>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
-  /*
-   * Necesitamos todos los datos
-   * para renderizar pending o success.
-   */
-  if (!booking || !payment || !checkoutData) {
-    return null;
-  }
+  const scheduleList = id ? experienceSchedules[id] : undefined;
+  const schedule =
+    scheduleList?.find((item) => item.status === "available") ??
+    scheduleList?.[0] ??
+    null;
 
-  const {
-    schedule,
-    experience,
-    guests,
-    pricePerPerson,
-    currency,
-    experienceName,
-    dateLabel,
-    timeLabel,
-    meetingPoint,
-    money,
-    gcalUrl,
-  } = checkoutData;
+  const pricing = id ? experiencePricing[id] : undefined;
+  const pricePerPerson = pricing?.pricePerPerson;
+  const currency = pricing?.currency ?? "USD";
+  const guests = order ? Math.max(1, order.travelers || 1) : bookingMeta.guests;
+  const total = order
+    ? getItineraryTotals(order).total
+    : typeof pricePerPerson === "number"
+      ? pricePerPerson * guests
+      : 0;
+  const money = (amount: number) =>
+    `${currency === "USD" ? "US$" : currency}${amount}`;
 
-  /*
-   * =========================
-   * PAYMENT STILL PENDING
-   * =========================
-   */
+  const experienceName = order
+    ? t("ck_itinerary_bundle")
+    : exp
+      ? t(exp.titleKey)
+      : "";
+  const dateLabel = order
+    ? formatOrderRange(order, i18n.language)
+    : schedule
+      ? formatScheduleDate(schedule, i18n.language)
+      : "—";
+  const timeLabel = order
+    ? "—"
+    : schedule
+      ? formatScheduleTime(schedule, i18n.language)
+      : "—";
+  const meetingPoint = exp ? t(exp.meetingPointKey) : "";
 
-  const isPaymentPending =
-    booking.status === "PENDING" &&
-    booking.paymentStatus === "PENDING" &&
-    payment.status === "PENDING";
-  if (isPaymentPending) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center px-6 pt-16 md:pt-20">
-        <div className="text-center max-w-md">
-          <div className="w-14 h-14 mx-auto rounded-full bg-white border border-gray-200 flex items-center justify-center mb-5">
-            <i className="ri-time-line text-2xl text-accent" />
-          </div>
-
-          <h1 className="font-display text-2xl text-primary font-bold mb-3">
-            {t("ck_pending_title")}
-          </h1>
-
-          <p className="text-gray-600 text-sm leading-relaxed mb-6">
-            {t("ck_pending_desc")}
-          </p>
-
-          <button
-            onClick={() => window.location.reload()}
-            className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full bg-accent text-white hover:bg-accent-dark transition-colors cursor-pointer"
-          >
-            <i className="ri-refresh-line" />
-
-            {t("ck_check_again")}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  /*
-   * =========================
-   * SUCCESS
-   * =========================
-   */
+  const gcalUrl =
+    !order && schedule && exp
+      ? `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(experienceName)}&dates=${toGcalDate(schedule.startDateTime)}/${toGcalDate(schedule.endDateTime)}&details=${encodeURIComponent(t(exp.subtitleKey))}&location=${encodeURIComponent(meetingPoint)}`
+      : "";
 
   return (
-    <div className="pt-16 md:pt-20">
-      <section className="section-padding py-12 md:py-16">
-        <SuccessBanner
-          title={t("ck_success_title")}
-          subtitle={t("ck_success_subtitle")}
-          referenceLabel={t("ck_reference")}
-          reference={booking.bookingCode}
-        />
-      </section>
+    <div className="min-h-screen bg-surface flex flex-col">
+      <Navbar />
 
-      <section className="section-padding pb-16 md:pb-24">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          <div className="lg:col-span-2 space-y-6 md:space-y-8">
-            <BookingDetailsCard
-              img={experience?.coverImage?.path ?? ""}
-              title={experienceName}
-              subtitle={experience?.shortDescription ?? experience?.description}
-              dateLabel={dateLabel}
-              timeLabel={timeLabel}
-              guests={guests}
-              meetingPoint={meetingPoint}
-            />
+      <main className="flex-1 pt-16 md:pt-20">
+        {/* Success header */}
+        <section className="section-padding py-12 md:py-16">
+          <SuccessBanner
+            title={t("ck_success_title")}
+            subtitle={t("ck_success_subtitle")}
+            referenceLabel={t("ck_reference")}
+            reference={bookingMeta.reference}
+          />
+        </section>
 
-            <GuestDetailsCard
-              name={booking.contactName}
-              email={booking.contactEmail}
-              phone={booking.contactPhone ?? ""}
-              requests={booking.specialRequests ?? ""}
-            />
-
-            <PaymentCard
-              brand={payment.brand ?? "Stripe"}
-              last4={payment.last4 ?? ""}
-              transactionId={payment.transactionId ?? ""}
-              amountLabel={money(payment.amount)}
-              paidAt={payment.paidAt ?? ""}
-            />
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="space-y-6 md:space-y-8 lg:sticky lg:top-24">
-              <OrderSummary
-                experienceName={experienceName}
-                dateLabel={dateLabel}
-                timeLabel={timeLabel}
-                guests={guests}
-                pricePerPerson={pricePerPerson}
-                currency={currency}
+        {/* Content */}
+        <section className="section-padding pb-16 md:pb-24">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+            {/* Main column */}
+            <div className="lg:col-span-2 space-y-6 md:space-y-8">
+              {order ? (
+                <ItineraryDetailsCard order={order} />
+              ) : (
+                <BookingDetailsCard
+                  img={exp?.img ?? ""}
+                  title={experienceName}
+                  subtitle={exp ? t(exp.subtitleKey) : ""}
+                  dateLabel={dateLabel}
+                  timeLabel={timeLabel}
+                  guests={guests}
+                  meetingPoint={meetingPoint}
+                />
+              )}
+              <GuestDetailsCard
+                name={bookingCustomer.name}
+                email={bookingCustomer.email}
+                phone={bookingCustomer.phone}
+                requests={bookingCustomer.specialRequests}
               />
+              <PaymentCard
+                brand={bookingPayment.brand}
+                last4={bookingPayment.last4}
+                transactionId={bookingPayment.transactionId}
+                amountLabel={money(total)}
+                paidAt={bookingMeta.paidAt}
+              />
+            </div>
 
-              <NextSteps />
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <div className="space-y-6 md:space-y-8 lg:sticky lg:top-24">
+                {order ? (
+                  <ItinerarySummary order={order} />
+                ) : (
+                  <OrderSummary
+                    experienceName={experienceName}
+                    dateLabel={dateLabel}
+                    timeLabel={timeLabel}
+                    guests={guests}
+                    pricePerPerson={pricePerPerson}
+                    currency={currency}
+                  />
+                )}
 
-              <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-7">
-                <div className="flex items-center gap-2 mb-3">
-                  <i className="ri-customer-service-2-line text-accent text-lg" />
+                <NextSteps />
 
-                  <h2 className="font-display text-lg text-primary font-bold">
-                    {t("ck_help_title")}
-                  </h2>
-                </div>
-
-                <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                  {t("ck_help_desc")}
-                </p>
-
-                <div className="space-y-3">
-                  <a
-                    href={WHATSAPP_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white text-sm font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap"
-                  >
-                    <i className="ri-whatsapp-line text-base" />
-
-                    {t("ck_whatsapp")}
-                  </a>
-
-                  <a
-                    href={gcalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-primary text-sm font-medium rounded-full hover:border-accent hover:text-accent transition-colors whitespace-nowrap"
-                  >
-                    <i className="ri-calendar-event-line text-base" />
-
-                    {t("ck_add_calendar")}
-                  </a>
-
-                  <button
-                    onClick={() => navigate("/")}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 text-gray-500 text-sm font-medium rounded-full hover:text-primary transition-colors cursor-pointer whitespace-nowrap"
-                  >
-                    <i className="ri-arrow-left-line" />
-
-                    {t("ck_back_home")}
-                  </button>
+                <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-7">
+                  <div className="flex items-center gap-2 mb-3">
+                    <i className="ri-customer-service-2-line text-accent text-lg" />
+                    <h2 className="font-display text-lg text-primary font-bold">
+                      {t("ck_help_title")}
+                    </h2>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-5">
+                    {t("ck_help_desc")}
+                  </p>
+                  <div className="space-y-3">
+                    <a
+                      href={WHATSAPP_HREF}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent text-white text-sm font-semibold rounded-full hover:bg-accent-dark transition-colors whitespace-nowrap"
+                    >
+                      <i className="ri-whatsapp-line text-base" />
+                      {t("ck_whatsapp")}
+                    </a>
+                    {gcalUrl && (
+                      <a
+                        href={gcalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 text-primary text-sm font-medium rounded-full hover:border-accent hover:text-accent transition-colors whitespace-nowrap"
+                      >
+                        <i className="ri-calendar-event-line text-base" />
+                        {t("ck_add_calendar")}
+                      </a>
+                    )}
+                    <button
+                      onClick={() => navigate("/")}
+                      className="w-full flex items-center justify-center gap-2 px-6 py-3 text-gray-500 text-sm font-medium rounded-full hover:text-primary transition-colors cursor-pointer whitespace-nowrap"
+                    >
+                      <i className="ri-arrow-left-line" />
+                      {t("ck_back_home")}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
+
+      <Footer />
     </div>
   );
 }

@@ -114,6 +114,12 @@ export default {
   ck_add_calendar: 'Add to calendar',
   ck_back_home: 'Back to home',
   ck_not_found: 'We could not find this booking.',
+  ck_itinerary_label: 'Itinerary details',
+  ck_itinerary_bundle: 'Multi-experience itinerary',
+  ck_itinerary_dates: 'Travel dates',
+  ck_itinerary_days: 'Days',
+  ck_itinerary_day: 'Day {{count}}',
+  ck_itinerary_experiences: 'Experiences included',
   ck_not_found_desc: 'Check the link or head back home to explore the experiences.',
 
   // ---- PACKAGE 1: Santiago Historic Walk + Latin Dance Class ----
@@ -256,7 +262,7 @@ export default {
   exp7_meeting_point: 'Downtown dance studio, confirmed at time of booking.',
   exp7_price_note: 'US$35 per person. Discount for groups of 5+.',
   exp7_price_amount: 'US$35',
-  exp7_date: 'Saturday, November 7, 2026',
+  exp7_date: 'Saturday, December 12, 2026',
   exp7_schedule: '11:30 PM – 3:00 AM',
   exp7_requirements: 'No previous dance experience required.',
   exp7_recommendations: 'Wear comfortable clothing and suitable shoes for dancing.',
